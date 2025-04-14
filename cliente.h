@@ -1,10 +1,10 @@
 #ifndef CLIENTE_H
 #define CLIENTE_H
-
+#define MAX_L 30
 typedef struct{
     char cod_fis[17];
-    char nome[30];
-    char cogn[30];
+    char nome[MAX_L];
+    char cogn[MAX_L];
     char data[11];// 00/00/0000
     int abb;
 }cliente;
