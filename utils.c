@@ -70,8 +70,10 @@ void visualLista(listaCliente l) {
 listaCliente rimuoviCliente(listaCliente l) {
     struct node *corr=l->testa; //nodo corrente
     struct node *prec=NULL; //puntatore al nodo precedente
+    printf("Lista di clienti cancellati per ABBONAMENTO SCADUTO\n");
     while (corr!=NULL) {
         if (corr->val.abb<=0) {
+            output_cliente(corr->val);
             if (prec==NULL) l->testa=corr->next;
             else prec->next=corr->next;
             free(corr);

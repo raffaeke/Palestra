@@ -7,7 +7,7 @@ listaCliente newLista(); //Crea una nuova lista
 int emptyLista(listaCliente); //verifica se la lista e' vuota
 listaCliente consLista(listaCliente,cliente);
 listaCliente LoadInizio(listaCliente); //aggiunge i clienti presenti nel file alla lista
-/*TODO*/cliente trovaCliente(listaCliente,char[]); //trova il cliente tramite cod fiscale
+cliente trovaCliente(listaCliente,char[]); //trova il cliente tramite cod fiscale
 listaCliente rimuoviCliente(listaCliente); //rimuove chi ha l abbonamento scaduto
 void visualLista(listaCliente);//Visualizza l'intera lista
 int sizeLista(listaCliente); //FORSE SI USA PER IL REPORT

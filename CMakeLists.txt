@@ -7,4 +7,5 @@ add_executable(Palestra
         main.c
         utils.c
         cliente_lista.h
+        lezioni.h
 )
