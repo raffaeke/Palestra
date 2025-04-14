@@ -12,6 +12,7 @@ struct node {
 struct ListaCliente {
     struct node *testa;
 };
+#define NOMEFILE "abbonati.txt"
 listaCliente newLista() {
     listaCliente l=malloc(sizeof(struct ListaCliente));
     if(l!=NULL) l->testa=NULL;
@@ -21,7 +22,7 @@ int emptyLista(listaCliente l) {
     return l->testa==NULL;
 }
 
-listaCliente consLista(listaCliente l,cliente c) {
+listaCliente consLista(listaCliente l, const cliente c) {
     struct node *nuovo = malloc(sizeof(struct node));
     if (nuovo!=NULL) {
         nuovo->val=c;
@@ -34,7 +35,7 @@ listaCliente consLista(listaCliente l,cliente c) {
 listaCliente LoadInizio(listaCliente l) {
     cliente temp;
     bool flag=false;
-    FILE *f = fopen("abbonati.txt", "r");
+    FILE *f = fopen(NOMEFILE, "r");
     if (f==NULL) {
         perror("File non aperto");
     }
@@ -54,7 +55,7 @@ listaCliente LoadInizio(listaCliente l) {
 }
 
 void visualLista(listaCliente l) {
-    struct node *p=l->testa;
+    const struct node *p=l->testa;
     if (!emptyLista(l)) {
        while (p!=NULL) {
            output_cliente(p->val);
@@ -80,7 +81,7 @@ listaCliente rimuoviCliente(listaCliente l) {
     return l;
 }
 void Updatefile(listaCliente l) {
-    FILE *f = fopen("abbonati.txt", "w");
+    FILE *f = fopen(NOMEFILE, "w");
     struct node *p=l->testa;
     if (f==NULL) {perror("File non aperto");}
     if (!emptyLista(l)) {
@@ -91,11 +92,22 @@ void Updatefile(listaCliente l) {
     }
     fclose(f);
 }
+int sizeLista(listaCliente l) {
+    struct node *p=l->testa;
+    int cont=0;
+    if (!emptyLista(l)) {
+        while (p!=NULL) {
+            cont++;
+            p=p->next;
+        }
+    }
+    return cont;
+}
 //-----------------FUNZIONI CLIENTE_H -------------------------------------------------
 void output_cliente(cliente c) {
     printf("%s\t%-10s\t%-10s\t%-10s\t%-5d\n",c.cod_fis,c.nome,c.cogn,c.data,c.abb);
 }
-cliente input_cliente(char cod[],char n[],char c[],char d[],int a) {
+cliente input_cliente(char cod[],char n[],char c[],char d[], const int a) {
     cliente temp;
     strcpy(temp.cod_fis,cod);
     strcpy(temp.nome,n);
