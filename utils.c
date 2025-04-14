@@ -18,6 +18,7 @@ listaCliente newLista() {
     if(l!=NULL) l->testa=NULL;
     return l;
 }
+
 int emptyLista(listaCliente l) {
     return l->testa==NULL;
 }
@@ -65,6 +66,7 @@ void visualLista(listaCliente l) {
     else printf("Lista vuota");
 
 }
+
 listaCliente rimuoviCliente(listaCliente l) {
     struct node *corr=l->testa; //nodo corrente
     struct node *prec=NULL; //puntatore al nodo precedente
@@ -80,6 +82,7 @@ listaCliente rimuoviCliente(listaCliente l) {
     }
     return l;
 }
+
 void Updatefile(listaCliente l) {
     FILE *f = fopen(NOMEFILE, "w");
     struct node *p=l->testa;
@@ -92,6 +95,7 @@ void Updatefile(listaCliente l) {
     }
     fclose(f);
 }
+
 int sizeLista(listaCliente l) {
     struct node *p=l->testa;
     int cont=0;
@@ -102,6 +106,21 @@ int sizeLista(listaCliente l) {
         }
     }
     return cont;
+}
+
+cliente trovaCliente(listaCliente l,char cod[]) {
+    struct node *p=l->testa;
+    if (!emptyLista(l)) {
+        while (p!=NULL) {
+            cliente temp=p->val;
+            if (strcmp(temp.cod_fis,cod)==0) {
+                return temp;
+            }
+            p=p->next;
+        }
+    }
+    else printf("Lista vuota");
+    return NULL_CLIENTE;
 }
 //-----------------FUNZIONI CLIENTE_H -------------------------------------------------
 void output_cliente(cliente c) {
@@ -115,4 +134,8 @@ cliente input_cliente(char cod[],char n[],char c[],char d[], const int a) {
     strcpy(temp.data,d);
     temp.abb=a;
     return temp;
+}
+bool clienteNULL(cliente c) {
+    if ((strcmp(c.cod_fis,"")==0) && (strcmp(c.nome,"")==0) && (strcmp(c.cogn,"")==0) && (strcmp(c.data,"")==0) && (c.abb==0)) return false;
+    else return true;
 }
