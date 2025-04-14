@@ -20,13 +20,7 @@ listaCliente newLista() {
 int emptyLista(listaCliente l) {
     return l->testa==NULL;
 }
-cliente getFirst(listaCliente l) {
-    if (!emptyLista(l)) {
-        cliente temp = l->testa->val;
-        return temp;
-    }
-    return NULL_CLIENTE;
-}
+
 listaCliente consLista(listaCliente l,cliente c) {
     struct node *nuovo = malloc(sizeof(struct node));
     if (nuovo!=NULL) {
