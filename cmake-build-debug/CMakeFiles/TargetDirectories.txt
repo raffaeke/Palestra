@@ -1,0 +1,3 @@
+C:/Users/Raffaele/CLionProjects/Palestra/cmake-build-debug/CMakeFiles/Palestra.dir
+C:/Users/Raffaele/CLionProjects/Palestra/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Raffaele/CLionProjects/Palestra/cmake-build-debug/CMakeFiles/rebuild_cache.dir
