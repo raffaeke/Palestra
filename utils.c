@@ -124,6 +124,18 @@ cliente trovaCliente(listaCliente l,char cod[]) {
     else printf("Lista vuota");
     return NULL_CLIENTE;
 }
+void NewAbbonamento(listaCliente l) {
+    cliente temp;
+    printf("\nInserisci i dati del nuovo cliente:\nCOD FISCALE/ NOME/ COGNOME/ DATA DI NASCITA/ DURATA ABBONAMENTO\n");
+    scanf("%s",temp.cod_fis);
+    scanf("%s",temp.nome);
+    scanf("%s",temp.cogn);
+    scanf("%s",temp.data);
+    scanf("%d",&temp.abb);
+    l=consLista(l,temp);
+    Updatefile(l);
+
+}
 //-----------------FUNZIONI CLIENTE_H -------------------------------------------------
 void output_cliente(cliente c) {
     printf("%s\t%-10s\t%-10s\t%-10s\t%-5d\n",c.cod_fis,c.nome,c.cogn,c.data,c.abb);
