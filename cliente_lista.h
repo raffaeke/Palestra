@@ -12,5 +12,5 @@ listaCliente rimuoviCliente(listaCliente); //rimuove chi ha l abbonamento scadut
 void visualLista(listaCliente);//Visualizza l'intera lista
 int sizeLista(listaCliente); //FORSE SI USA PER IL REPORT
 void Updatefile(listaCliente); // Scrive su file solo chi ha abb>0
-void NewAbbonamento(listaCliente);
+cliente NewAbbonamento(listaCliente);
 #endif //CLIENTE_LISTA_H

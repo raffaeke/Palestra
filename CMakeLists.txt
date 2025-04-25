@@ -8,4 +8,5 @@ add_executable(Palestra
         utils.c
         cliente_lista.h
         lezioni.h
+        cliente_coda.h
 )

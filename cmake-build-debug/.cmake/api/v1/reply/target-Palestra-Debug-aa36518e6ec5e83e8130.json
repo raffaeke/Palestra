@@ -99,7 +99,8 @@
 			"sourceIndexes" : 
 			[
 				2,
-				3
+				3,
+				4
 			]
 		}
 	],
@@ -125,6 +126,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "lezioni.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "cliente_coda.h",
 			"sourceGroupIndex" : 1
 		}
 	],

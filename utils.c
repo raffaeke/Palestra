@@ -1,5 +1,6 @@
 #include "cliente.h"
 #include "cliente_lista.h"
+#include "cliente_coda.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,6 +12,10 @@ struct node {
 };
 struct ListaCliente {
     struct node *testa;
+};
+struct CodaCliente {
+    struct node *testa,*coda;
+    int num_clienti;
 };
 #define NOMEFILE "abbonati.txt"
 listaCliente newLista() {
@@ -124,9 +129,9 @@ cliente trovaCliente(listaCliente l,char cod[]) {
     else printf("Lista vuota");
     return NULL_CLIENTE;
 }
-void NewAbbonamento(listaCliente l) {
+cliente NewAbbonamento(listaCliente l) {
     cliente temp;
-    printf("\nInserisci i dati del nuovo cliente:\nCOD FISCALE/ NOME/ COGNOME/ DATA DI NASCITA/ DURATA ABBONAMENTO\n");
+   // printf("\nInserisci i dati del nuovo cliente:\nCOD FISCALE/ NOME/ COGNOME/ DATA DI NASCITA/ DURATA ABBONAMENTO\n");
     scanf("%s",temp.cod_fis);
     scanf("%s",temp.nome);
     scanf("%s",temp.cogn);
@@ -134,7 +139,51 @@ void NewAbbonamento(listaCliente l) {
     scanf("%d",&temp.abb);
     l=consLista(l,temp);
     Updatefile(l);
-
+ return temp;
+}
+//-----------------FUNZIONI CODA_CLIENTE------------------------------------------
+codaCliente newCoda() {
+    codaCliente q=malloc(sizeof(struct CodaCliente));
+    if (q==NULL) {
+        return NULL;
+    }
+    q->num_clienti=0;
+    q->testa=NULL;
+    q->coda=NULL;
+    return q;
+}
+int emptyCoda(codaCliente q) {
+    if (q==NULL) {
+        return -1;      //se la coda non esiste restituisce -1
+    }
+    return q->num_clienti==0; //se esiste ed e' vuota restituisce 1, 0 altrimenti
+}
+int enqueue(codaCliente q, const cliente c) {
+    // -1= la coda non esiste | 0=nodo non creato correttamente | 1 esecuzione andata a buon fine
+    if (q==NULL) {
+        return -1;
+    }
+    struct node *nuovo=malloc(sizeof(struct node));
+    if (nuovo==NULL) {
+        return 0;
+    }
+    nuovo->val=c;
+    nuovo->next=NULL;
+    if (q->testa==NULL) q->testa=nuovo;
+    else q->coda->next=nuovo;
+    q->coda=nuovo;
+    q->num_clienti++;
+    return 1;
+}
+cliente dequeue(codaCliente q) {
+    if (q==NULL || q->num_clienti==0 ) return NULL_CLIENTE;
+    cliente ris=q->testa->val;
+    struct node *temp=q->testa;
+    q->testa=q->testa->next;
+    free(temp);
+    if (q->testa==NULL) q->coda=NULL;
+    q->num_clienti--;
+    return ris;
 }
 //-----------------FUNZIONI CLIENTE_H -------------------------------------------------
 void output_cliente(cliente c) {
