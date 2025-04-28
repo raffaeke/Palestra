@@ -1,6 +1,7 @@
 #include "cliente.h"
 #include "cliente_lista.h"
 #include "cliente_coda.h"
+#include "lezioni.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -72,7 +73,7 @@ void visualLista(listaCliente l) {
 
 }
 
-listaCliente rimuoviCliente(listaCliente l) {
+listaCliente rimuoviAbbonamentiScaduti(listaCliente l) {
     struct node *corr=l->testa; //nodo corrente
     struct node *prec=NULL; //puntatore al nodo precedente
     printf("Lista di clienti cancellati per ABBONAMENTO SCADUTO\n");
@@ -89,7 +90,19 @@ listaCliente rimuoviCliente(listaCliente l) {
     }
     return l;
 }
-
+void RinnovaAbbonamento(listaCliente l,cliente c,int r) {
+    struct node *p=l->testa;
+    if (!emptyLista(l)) {
+        while (p!=NULL) {
+            if (strcmp(p->val.cod_fis,c.cod_fis)==0) {
+                p->val.abb+=r;
+                Updatefile(l);
+                printf("Abbonamento rinnovato con successo\n");
+                return;
+            }
+            p=p->next;
+        }}
+}
 void Updatefile(listaCliente l) {
     FILE *f = fopen(NOMEFILE, "w");
     struct node *p=l->testa;
@@ -189,7 +202,7 @@ cliente dequeue(codaCliente q) {
 void output_cliente(cliente c) {
     printf("%s\t%-10s\t%-10s\t%-10s\t%-5d\n",c.cod_fis,c.nome,c.cogn,c.data,c.abb);
 }
-cliente input_cliente(char cod[],char n[],char c[],char d[], const int a) {
+/*cliente input_cliente(char cod[],char n[],char c[],char d[], const int a) {
     cliente temp;
     strcpy(temp.cod_fis,cod);
     strcpy(temp.nome,n);
@@ -197,8 +210,12 @@ cliente input_cliente(char cod[],char n[],char c[],char d[], const int a) {
     strcpy(temp.data,d);
     temp.abb=a;
     return temp;
-}
+}*/
 bool clienteNULL(cliente c) {
     if ((strcmp(c.cod_fis,"")==0) && (strcmp(c.nome,"")==0) && (strcmp(c.cogn,"")==0) && (strcmp(c.data,"")==0) && (c.abb==0)) return false;
     else return true;
+}
+//-----------------FUNZIONI LEZIONI_H---------------------------------------------------------
+void output_lezione(lezione lez) {
+    printf("%s\t%-10d\t%-10d\t%-10d",lez.desc,lez.ora,lez.pren,lez.maxpren);
 }
