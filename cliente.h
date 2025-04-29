@@ -11,7 +11,7 @@ typedef struct{
 }cliente;
 extern const cliente NULL_CLIENTE;
 
-// cliente input_cliente(char[],char[],char[],char[],int); //Prende come parametri i valori per riempiere la struct ciente e restituisce una variabile cliente con quei dati al suo interno
+//cliente input_cliente(char[],char[],char[],char[],int); //Prende come parametri i valori per riempiere la struct ciente e restituisce una variabile cliente con quei dati al suo interno
 void output_cliente(cliente);//Stampa il contenuto della struct
 bool clienteNULL(cliente);
 

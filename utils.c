@@ -1,4 +1,5 @@
 #include "cliente.h"
+#include "lista_lezioni.h"
 #include "cliente_lista.h"
 #include "cliente_coda.h"
 #include "lezioni.h"
@@ -7,30 +8,37 @@
 #include <string.h>
 #include <stdbool.h>
 const cliente NULL_CLIENTE = {"","","","", 0};
-struct node {
+struct node_c {
     cliente val;
-    struct node *next;
+    struct node_c *next;
 };
 struct ListaCliente {
-    struct node *testa;
+    struct node_c *testa;
 };
 struct CodaCliente {
-    struct node *testa,*coda;
+    struct node_c *testa,*coda;
     int num_clienti;
 };
-#define NOMEFILE "abbonati.txt"
-listaCliente newLista() {
+struct node_l {
+    lezione val;
+    struct node_l *next;
+};
+struct ListaLezioni {
+    struct node_l *testa;
+};
+//-----------------FUNZIONI LISTA_CLIENTE------------------------------------------
+listaCliente newListaC() {
     listaCliente l=malloc(sizeof(struct ListaCliente));
     if(l!=NULL) l->testa=NULL;
     return l;
 }
 
-int emptyLista(listaCliente l) {
+int emptyListaC(listaCliente l) {
     return l->testa==NULL;
 }
 
-listaCliente consLista(listaCliente l, const cliente c) {
-    struct node *nuovo = malloc(sizeof(struct node));
+listaCliente consListaC(listaCliente l, const cliente c) {
+    struct node_c *nuovo = malloc(sizeof(struct node_c));
     if (nuovo!=NULL) {
         nuovo->val=c;
         nuovo->next=l->testa;
@@ -49,21 +57,21 @@ listaCliente LoadInizio(listaCliente l) {
     char buffer[256];
     while (fgets(buffer, sizeof(buffer), f)) {
         sscanf(buffer, "%s %s %s %s %d", temp.cod_fis, temp.nome, temp.cogn, temp.data, &temp.abb);
-        if (temp.abb>0)l = consLista(l, temp);
+        if (temp.abb>0)l = consListaC(l, temp);
         else {
             flag=true;
         }
     }
     fclose(f);
     if (flag) {
-        Updatefile(l);
+        updateFileAbb(l);
     }
     return l;
 }
 
-void visualLista(listaCliente l) {
-    const struct node *p=l->testa;
-    if (!emptyLista(l)) {
+void visualListaC(listaCliente l) {
+    const struct node_c *p=l->testa;
+    if (!emptyListaC(l)) {
        while (p!=NULL) {
            output_cliente(p->val);
            p=p->next;
@@ -73,10 +81,10 @@ void visualLista(listaCliente l) {
 
 }
 
-listaCliente rimuoviAbbonamentiScaduti(listaCliente l) {
-    struct node *corr=l->testa; //nodo corrente
-    struct node *prec=NULL; //puntatore al nodo precedente
-    printf("Lista di clienti cancellati per ABBONAMENTO SCADUTO\n");
+listaCliente rimuoviAbbonamenti(listaCliente l) {
+    struct node_c *corr=l->testa; //nodo corrente
+    struct node_c *prec=NULL; //puntatore al nodo precedente
+    printf("Lista di clienti cancellati per ABBONAMENTO SCADUTO o ABBONAMENTO ANNULLATO\n");
     while (corr!=NULL) {
         if (corr->val.abb<=0) {
             output_cliente(corr->val);
@@ -90,24 +98,24 @@ listaCliente rimuoviAbbonamentiScaduti(listaCliente l) {
     }
     return l;
 }
-void RinnovaAbbonamento(listaCliente l,cliente c,int r) {
-    struct node *p=l->testa;
-    if (!emptyLista(l)) {
+int RinnovaAbbonamento(listaCliente l, const cliente c, const int r) {
+    struct node_c *p=l->testa;
+    if (!emptyListaC(l)) {
         while (p!=NULL) {
             if (strcmp(p->val.cod_fis,c.cod_fis)==0) {
                 p->val.abb+=r;
-                Updatefile(l);
-                printf("Abbonamento rinnovato con successo\n");
-                return;
+                updateFileAbb(l);
+               return 1;
             }
             p=p->next;
         }}
+    return 0;
 }
-void Updatefile(listaCliente l) {
+void updateFileAbb(listaCliente l) {
     FILE *f = fopen(NOMEFILE, "w");
-    struct node *p=l->testa;
+    struct node_c *p=l->testa;
     if (f==NULL) {perror("File non aperto");}
-    if (!emptyLista(l)) {
+    if (!emptyListaC(l)) {
         while (p!=NULL) {
         fprintf(f,"%s %s %s %s %d\n",p->val.cod_fis,p->val.nome,p->val.cogn,p->val.data,p->val.abb);
         p=p->next;
@@ -116,10 +124,10 @@ void Updatefile(listaCliente l) {
     fclose(f);
 }
 
-int sizeLista(listaCliente l) {
-    struct node *p=l->testa;
+int sizeListaC(listaCliente l) {
+    struct node_c *p=l->testa;
     int cont=0;
-    if (!emptyLista(l)) {
+    if (!emptyListaC(l)) {
         while (p!=NULL) {
             cont++;
             p=p->next;
@@ -129,8 +137,8 @@ int sizeLista(listaCliente l) {
 }
 
 cliente trovaCliente(listaCliente l,char cod[]) {
-    struct node *p=l->testa;
-    if (!emptyLista(l)) {
+    struct node_c *p=l->testa;
+    if (!emptyListaC(l)) {
         while (p!=NULL) {
             cliente temp=p->val;
             if (strcmp(temp.cod_fis,cod)==0) {
@@ -150,9 +158,32 @@ cliente NewAbbonamento(listaCliente l) {
     scanf("%s",temp.cogn);
     scanf("%s",temp.data);
     scanf("%d",&temp.abb);
-    l=consLista(l,temp);
-    Updatefile(l);
+    l=consListaC(l,temp);
+    updateFileAbb(l);
  return temp;
+}
+int annullaAbbonamento(listaCliente l, const cliente c) {
+    struct node_c *p=l->testa;
+    if (!emptyListaC(l)) {
+        while (p!=NULL) {
+            if (strcmp(p->val.cod_fis,c.cod_fis)==0) {
+                p->val.abb=0;
+                return 1;
+            }
+            p=p->next;
+        }
+    }
+    return 0;
+}
+listaCliente updateSettimanale(listaCliente l) {
+    struct node_c *p=l->testa;
+    if (!emptyListaC(l)) {
+        while (p!=NULL) {
+            p->val.abb--;
+            p=p->next;
+        }
+    }
+    return l;
 }
 //-----------------FUNZIONI CODA_CLIENTE------------------------------------------
 codaCliente newCoda() {
@@ -176,7 +207,7 @@ int enqueue(codaCliente q, const cliente c) {
     if (q==NULL) {
         return -1;
     }
-    struct node *nuovo=malloc(sizeof(struct node));
+    struct node_c *nuovo=malloc(sizeof(struct node_c));
     if (nuovo==NULL) {
         return 0;
     }
@@ -191,7 +222,7 @@ int enqueue(codaCliente q, const cliente c) {
 cliente dequeue(codaCliente q) {
     if (q==NULL || q->num_clienti==0 ) return NULL_CLIENTE;
     cliente ris=q->testa->val;
-    struct node *temp=q->testa;
+    struct node_c *temp=q->testa;
     q->testa=q->testa->next;
     free(temp);
     if (q->testa==NULL) q->coda=NULL;
@@ -217,5 +248,52 @@ bool clienteNULL(cliente c) {
 }
 //-----------------FUNZIONI LEZIONI_H---------------------------------------------------------
 void output_lezione(lezione lez) {
-    printf("%s\t%-10d\t%-10d\t%-10d",lez.desc,lez.ora,lez.pren,lez.maxpren);
+    printf("\n%s\t%-5d\n",lez.desc,lez.ora);
+}
+//-----------------FUNZIONI LISTA_LEZIONI_H---------------------------------------------------
+listaLezioni newListaL() {
+    listaLezioni l=malloc(sizeof(struct ListaLezioni));
+    if (l==NULL) {
+        return NULL;
+    }
+    l->testa=NULL;
+    return l;
+}
+int emptyListaL(listaLezioni l) {
+    if (l==NULL) {
+        return -1;      //se la coda non esiste restituisce -1
+    }
+    return l->testa==NULL; //se esiste ed e' vuota restituisce 1, 0 altrimenti
+}
+void visualListaL(listaLezioni l) {
+    const struct node_l *p=l->testa;
+    if (!emptyListaL(l)) {
+        while (p!=NULL) {
+            output_lezione(p->val);
+            p=p->next;
+        }
+    }else printf("Lista vuota");
+}
+listaLezioni consListaL(listaLezioni l,lezione lez) {
+    struct node_l *nuovo=malloc(sizeof(struct node_l));
+    if (nuovo!=NULL) {
+        nuovo->val=lez;
+        nuovo->next=l->testa;
+        l->testa=nuovo;
+    }
+    return l;
+}
+listaLezioni loadListaL(listaLezioni l,char file[]) {
+    FILE *f = fopen(file, "r");
+    if (f==NULL) {
+        perror("File non aperto");
+    }
+    char buffer[256];
+    while (fgets(buffer, sizeof(buffer), f)) {
+        lezione temp;
+        sscanf(buffer, "%s %d %d %d",temp.desc,&temp.ora,&temp.pren,&temp.maxpren);
+        l=consListaL(l,temp);
+    }
+    fclose(f);
+    return l;
 }

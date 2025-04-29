@@ -33,6 +33,8 @@ CMakeFiles/Palestra.dir/main.c.obj
  C:/Users/Raffaele/CLionProjects/Palestra/cliente.h
  C:/Users/Raffaele/CLionProjects/Palestra/cliente_coda.h
  C:/Users/Raffaele/CLionProjects/Palestra/cliente_lista.h
+ C:/Users/Raffaele/CLionProjects/Palestra/lezioni.h
+ C:/Users/Raffaele/CLionProjects/Palestra/lista_lezioni.h
 
 CMakeFiles/Palestra.dir/utils.c.obj
  C:/Users/Raffaele/CLionProjects/Palestra/utils.c
@@ -64,4 +66,5 @@ CMakeFiles/Palestra.dir/utils.c.obj
  C:/Users/Raffaele/CLionProjects/Palestra/cliente_coda.h
  C:/Users/Raffaele/CLionProjects/Palestra/cliente_lista.h
  C:/Users/Raffaele/CLionProjects/Palestra/lezioni.h
+ C:/Users/Raffaele/CLionProjects/Palestra/lista_lezioni.h
 

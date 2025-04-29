@@ -31,7 +31,9 @@ CMakeFiles/Palestra.dir/main.c.obj: C:/Users/Raffaele/CLionProjects/Palestra/mai
   C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include/vadefs.h \
   C:/Users/Raffaele/CLionProjects/Palestra/cliente.h \
   C:/Users/Raffaele/CLionProjects/Palestra/cliente_coda.h \
-  C:/Users/Raffaele/CLionProjects/Palestra/cliente_lista.h
+  C:/Users/Raffaele/CLionProjects/Palestra/cliente_lista.h \
+  C:/Users/Raffaele/CLionProjects/Palestra/lezioni.h \
+  C:/Users/Raffaele/CLionProjects/Palestra/lista_lezioni.h
 
 CMakeFiles/Palestra.dir/utils.c.obj: C:/Users/Raffaele/CLionProjects/Palestra/utils.c \
   C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/limits.h \
@@ -61,7 +63,8 @@ CMakeFiles/Palestra.dir/utils.c.obj: C:/Users/Raffaele/CLionProjects/Palestra/ut
   C:/Users/Raffaele/CLionProjects/Palestra/cliente.h \
   C:/Users/Raffaele/CLionProjects/Palestra/cliente_coda.h \
   C:/Users/Raffaele/CLionProjects/Palestra/cliente_lista.h \
-  C:/Users/Raffaele/CLionProjects/Palestra/lezioni.h
+  C:/Users/Raffaele/CLionProjects/Palestra/lezioni.h \
+  C:/Users/Raffaele/CLionProjects/Palestra/lista_lezioni.h
 
 
 C:/Users/Raffaele/CLionProjects/Palestra/main.c:
@@ -113,6 +116,8 @@ C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include
 C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include/time.h:
 
 C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h:
+
+C:/Users/Raffaele/CLionProjects/Palestra/lista_lezioni.h:
 
 C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include/sec_api/stdio_s.h:
 

@@ -1,6 +1,13 @@
 #ifndef LEZIONI_H
 #define LEZIONI_H
 #define MAX_L 30
+#define lunedi "lunedi.txt"
+#define martedi "martedi.txt"
+#define mercoledi "mercoledi.txt"
+#define giovedi "giovedi.txt"
+#define venerdi "venerdi.txt"
+#define sabato "sabato.txt"
+
 typedef struct {
     char desc[MAX_L]; //Nome corso
     int ora;  //Ora di inizio

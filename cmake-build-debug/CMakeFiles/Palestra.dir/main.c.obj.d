@@ -29,4 +29,6 @@ CMakeFiles/Palestra.dir/main.c.obj: \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include/sec_api/sys/timeb_s.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include/_timeval.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include/pthread_time.h \
- C:\Users\Raffaele\CLionProjects\Palestra\cliente_coda.h
+ C:\Users\Raffaele\CLionProjects\Palestra\cliente_coda.h \
+ C:\Users\Raffaele\CLionProjects\Palestra\lista_lezioni.h \
+ C:\Users\Raffaele\CLionProjects\Palestra\lezioni.h
