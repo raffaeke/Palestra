@@ -3,6 +3,7 @@
 #define MAX_L 30
 #include <stdbool.h>
 typedef struct{
+    //ciaaidada daajsdbh 
     char cod_fis[17];
     char nome[MAX_L];
     char cogn[MAX_L];
