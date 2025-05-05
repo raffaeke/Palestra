@@ -62,37 +62,37 @@ int main(void) {
                             case 1: {
                                 listaLezioni ll = newListaL();
                                 ll = loadListaL(ll,lunedi);
-                                visualListaL(ll);
+                                /*Funzione per prenotare uan lezione va bene anche negli altri 6 case*/
                                 break;
                             }
                             case 2: {
                                 listaLezioni ll = newListaL();
                                 ll = loadListaL(ll,martedi);
-                                visualListaL(ll);
+
                                 break;
                             }
                             case 3: {
                                 listaLezioni ll = newListaL();
                                 ll = loadListaL(ll,mercoledi);
-                                visualListaL(ll);
+
                                 break;
                             }
                             case 4: {
                                 listaLezioni ll = newListaL();
                                 ll = loadListaL(ll,giovedi);
-                                visualListaL(ll);
+
                                 break;
                             }
                             case 5: {
                                 listaLezioni ll = newListaL();
                                 ll = loadListaL(ll,venerdi);
-                                visualListaL(ll);
+
                                 break;
                             }
                             case 6: {
                                 listaLezioni ll = newListaL();
                                 ll = loadListaL(ll,sabato);
-                                visualListaL(ll);
+
                                 break;
                             }
                             default: printf("\nGiorno non valido");break;

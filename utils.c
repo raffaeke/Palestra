@@ -28,53 +28,53 @@ struct ListaLezioni {
 };
 //-----------------FUNZIONI LISTA_CLIENTE------------------------------------------
 listaCliente newListaC() {
-    listaCliente l=malloc(sizeof(struct ListaCliente));
-    if(l!=NULL) l->testa=NULL;
+    listaCliente l=malloc(sizeof(struct ListaCliente)); //Alloca dinamicamente uno spazio per creare la lista
+    if(l!=NULL) l->testa=NULL; //se la malloc va a buon fine settiamo la testa a NULL
     return l;
 }
 
 int emptyListaC(listaCliente l) {
-    return l->testa==NULL;
+    return l->testa==NULL; //Se la testa è uguale a NULL restituisce 1, 0 altrimenti
 }
 
 listaCliente consListaC(listaCliente l, const cliente c) {
-    struct node_c *nuovo = malloc(sizeof(struct node_c));
-    if (nuovo!=NULL) {
-        nuovo->val=c;
-        nuovo->next=l->testa;
-        l->testa=nuovo;
+    struct node_c *nuovo = malloc(sizeof(struct node_c)); //Allochiamo lo spazio per un nuovo nodo
+    if (nuovo!=NULL) { //controllo se la malloc va a buon fine
+        nuovo->val=c; //Assegnazione del valore
+        nuovo->next=l->testa; //Collego il nuovo nodo alla testa della lista
+        l->testa=nuovo; //La testa della lista diventa il nuovo nodo
     }
     return l;
 }
 
 listaCliente LoadInizio(listaCliente l) {
     cliente temp;
-    bool flag=false;
-    FILE *f = fopen(NOMEFILE, "r");
-    if (f==NULL) {
+    bool flag=false; //Variabile utilizzata per controllare un eventuale uso di updateFileAbb()
+    FILE *f = fopen(NOMEFILE, "r"); //Apertura file abbonati in lettura
+    if (f==NULL) { //controllo sull'apertura
         perror("File non aperto");
     }
     char buffer[256];
-    while (fgets(buffer, sizeof(buffer), f)) {
-        sscanf(buffer, "%s %s %s %s %d", temp.cod_fis, temp.nome, temp.cogn, temp.data, &temp.abb);
-        if (temp.abb>0)l = consListaC(l, temp);
+    while (fgets(buffer, sizeof(buffer), f)) {//finché nel file sono presenti abbonati
+        sscanf(buffer, "%s %s %s %s %d", temp.cod_fis, temp.nome, temp.cogn, temp.data, &temp.abb); //prelevo i dati
+        if (temp.abb>0)l = consListaC(l, temp); //se l abbonamento è valido li aggiungo alla lista
         else {
-            flag=true;
+            flag=true; //se ci sono abbonamenti scaduti la flag diventa true
         }
     }
-    fclose(f);
-    if (flag) {
+    fclose(f); //chiusura file
+    if (flag) { //se la flag è true chiama la funzione
         updateFileAbb(l);
     }
     return l;
 }
 
 void visualListaC(listaCliente l) {
-    const struct node_c *p=l->testa;
-    if (!emptyListaC(l)) {
-       while (p!=NULL) {
-           output_cliente(p->val);
-           p=p->next;
+    const struct node_c *p=l->testa; //puntatore alla testa della lista
+    if (!emptyListaC(l)) { //controllo se la lista è vuota
+       while (p!=NULL) { //finché il puntatore non arriva alla fine della lista
+           output_cliente(p->val); //stampo i dati del nodo
+           p=p->next; //Avanzo di nodo
        }
     }
     else printf("Lista vuota");
@@ -85,16 +85,16 @@ listaCliente rimuoviAbbonamenti(listaCliente l) {
     struct node_c *corr=l->testa; //nodo corrente
     struct node_c *prec=NULL; //puntatore al nodo precedente
     printf("Lista di clienti cancellati per ABBONAMENTO SCADUTO o ABBONAMENTO ANNULLATO\n");
-    while (corr!=NULL) {
-        if (corr->val.abb<=0) {
-            output_cliente(corr->val);
-            if (prec==NULL) l->testa=corr->next;
-            else prec->next=corr->next;
-            free(corr);
+    while (corr!=NULL) { //finché il puntatore non arriva alla fine della lista
+        if (corr->val.abb<=0) { //se l abbonamento è minore o uguale a 0
+            output_cliente(corr->val); //stampo i dati del cliente
+            if (prec==NULL) l->testa=corr->next; //Il nodo da eliminare è in testa
+            else prec->next=corr->next; //Salta il nodo da eliminare collegando il precedente al successivo
+            free(corr); //Libera lo spazio del nodo corrente
             return l;
         }
-        prec=corr;
-        corr=corr->next;
+        prec=corr; //Il precedente prende il valore del nodo corrente
+        corr=corr->next; //il nodo corrente avanza
     }
     return l;
 }
@@ -243,14 +243,16 @@ void output_cliente(cliente c) {
     return temp;
 }*/
 bool clienteNULL(cliente c) {
-    if ((strcmp(c.cod_fis,"")==0) && (strcmp(c.nome,"")==0) && (strcmp(c.cogn,"")==0) && (strcmp(c.data,"")==0) && (c.abb==0)) return false;
-    else return true;
+    if ((strcmp(c.cod_fis,"")==0) && (strcmp(c.nome,"")==0) && (strcmp(c.cogn,"")==0) && (strcmp(c.data,"")==0) && (c.abb==0)) return true;
+    else return false;
 }
 //-----------------FUNZIONI LEZIONI_H---------------------------------------------------------
 void output_lezione(lezione lez) {
     printf("\n%s\t%-5d\n",lez.desc,lez.ora);
 }
+
 //-----------------FUNZIONI LISTA_LEZIONI_H---------------------------------------------------
+
 listaLezioni newListaL() {
     listaLezioni l=malloc(sizeof(struct ListaLezioni));
     if (l==NULL) {
@@ -261,7 +263,7 @@ listaLezioni newListaL() {
 }
 int emptyListaL(listaLezioni l) {
     if (l==NULL) {
-        return -1;      //se la coda non esiste restituisce -1
+        return -1;      //se la lista non esiste restituisce -1
     }
     return l->testa==NULL; //se esiste ed e' vuota restituisce 1, 0 altrimenti
 }

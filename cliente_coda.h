@@ -3,8 +3,12 @@
 #include "cliente.h"
 typedef struct CodaCliente* codaCliente;
 
-codaCliente newCoda();
-int emptyCoda(codaCliente);
-int enqueue(codaCliente,cliente);
-cliente dequeue(codaCliente);
+codaCliente newCoda(); //crea la coda
+
+int emptyCoda(codaCliente); //Verifica se la coda è vuota
+
+int enqueue(codaCliente,cliente); //Aggiunge un cliente alla coda
+
+cliente dequeue(codaCliente);//Rimuove un cliente dalla coda e restituisce la sua identita
+
 #endif //CLIENTE_CODA_H
