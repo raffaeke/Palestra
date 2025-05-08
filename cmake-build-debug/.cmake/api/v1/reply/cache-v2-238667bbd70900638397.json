@@ -154,7 +154,7 @@
 					"value" : "C compiler"
 				}
 			],
-			"type" : "STRING",
+			"type" : "FILEPATH",
 			"value" : "C:/Program Files/JetBrains/CLion 2024.3.5/bin/mingw/bin/gcc.exe"
 		},
 		{
