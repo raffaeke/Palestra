@@ -26,6 +26,12 @@ struct node_l {
 struct ListaLezioni {
     struct node_l *testa;
 };
+void init(int *c1,int *c2,int *c3,int *c4) {
+    *c1=0;
+     *c2=0;
+     *c3=0;
+     *c4=0;
+}
 //-----------------FUNZIONI LISTA_CLIENTE------------------------------------------
 listaCliente newListaC() {
     listaCliente l=malloc(sizeof(struct ListaCliente)); //Alloca dinamicamente uno spazio per creare la lista
