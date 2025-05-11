@@ -68,37 +68,50 @@ int main(void) {
                                 case 1: {
                                     listaLezioni ll = newListaL();
                                     ll = loadListaL(ll,lunedi);
-                                    /*Funzione per prenotare uan lezione va bene anche negli altri 6 case*/
+                                    int controllo = prenotaLezione(ll);
+                                    if (controllo==1)printf("\nLezione prenotata con successo\n");
+                                    else printf("\nLezione non prenotata\n");
                                     break;
                                 }
                                 case 2: {
                                     listaLezioni ll = newListaL();
                                     ll = loadListaL(ll,martedi);
+                                    int controllo = prenotaLezione(ll);
+                                    if (controllo==1)printf("\nLezione prenotata con successo\n");
+                                    else printf("\nLezione non prenotata\n");
 
                                     break;
                                 }
                                 case 3: {
                                     listaLezioni ll = newListaL();
                                     ll = loadListaL(ll,mercoledi);
-
+                                    int controllo = prenotaLezione(ll);
+                                    if (controllo==1)printf("\nLezione prenotata con successo\n");
+                                    else printf("\nLezione non prenotata\n");
                                     break;
                                 }
                                 case 4: {
                                     listaLezioni ll = newListaL();
                                     ll = loadListaL(ll,giovedi);
-
+                                    int controllo = prenotaLezione(ll);
+                                    if (controllo==1)printf("\nLezione prenotata con successo\n");
+                                    else printf("\nLezione non prenotata\n");
                                     break;
                                 }
                                 case 5: {
                                     listaLezioni ll = newListaL();
                                     ll = loadListaL(ll,venerdi);
-
+                                    int controllo = prenotaLezione(ll);
+                                    if (controllo==1)printf("\nLezione prenotata con successo\n");
+                                    else printf("\nLezione non prenotata\n");
                                     break;
                                 }
                                 case 6: {
                                     listaLezioni ll = newListaL();
                                     ll = loadListaL(ll,sabato);
-
+                                    int controllo = prenotaLezione(ll);
+                                    if (controllo==1)printf("\nLezione prenotata con successo\n");
+                                    else printf("\nLezione non prenotata\n");
                                     break;
                                 }
                                 default: printf("\nGiorno non valido");break;

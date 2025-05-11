@@ -250,7 +250,8 @@ bool clienteNULL(cliente c) {
 }
 //-----------------FUNZIONI LEZIONI_H---------------------------------------------------------
 void output_lezione(lezione lez) {
-    printf("\n%s\t%-5d\n",lez.desc,lez.ora);
+    printf("Lezione: %s | Ora: %d | Prenotati: %d/%d\n",
+               lez.desc, lez.ora, lez.pren, lez.maxpren);
 }
 
 //-----------------FUNZIONI LISTA_LEZIONI_H---------------------------------------------------
@@ -305,37 +306,19 @@ void mostraLezioniDisponibili(listaLezioni lezioni) {
     struct node_l *curr = lezioni->testa;
     printf("\nLezioni disponibili:\n");
     while (curr != NULL) {
-        printf("Lezione: %s | Ora: %d | Prenotati: %d/%d\n",
-               curr->val.desc, curr->val.ora, curr->val.pren, curr->val.maxpren);
+        output_lezione(curr->val);
         curr = curr->next;
     }
 }
-void salvaListaLezioni(listaLezioni lezioni, char filename[]) {
-    FILE *f = fopen(filename, "w");
-    if (f == NULL) {
-        perror("Errore apertura file per salvataggio");
-        return;
-    }
-    struct node_l *curr = lezioni->testa;
-    while (curr != NULL) {
-        fprintf(f, "%s %d %d %d\n",
-                curr->val.desc, curr->val.ora,
-                curr->val.pren, curr->val.maxpren);
-        curr = curr->next;
-    }
-    fclose(f);
-}
-void prenotaLezione(listaLezioni lezioni, char giorno[]) {
+
+int prenotaLezione(listaLezioni lezioni) {
     char lezioneScelta[15];
     int oraScelta;
-    int trovata = 0;
-
-    while (!trovata) {
         mostraLezioniDisponibili(lezioni);
 
         // Menu numerato
         const char* lezioniDisponibili[] = {
-            "attrezzi", "yoga", "karate", "pilates", "funzionale", "fitness", "zumba"
+            "Attrezzi", "Yoga", "Karate", "Pilates", "Funzionale", "Fitness", "Zumba"
         };
         int scelta = -1;
         printf("\nSeleziona una lezione tra le seguenti:\n");
@@ -351,13 +334,12 @@ void prenotaLezione(listaLezioni lezioni, char giorno[]) {
             }
         } while (scelta < 1 || scelta > 7);
         strcpy(lezioneScelta, lezioniDisponibili[scelta - 1]);
-
+        strcat(lezioneScelta, "\0");
         // Orario
         printf("Inserisci l'orario della lezione: ");
-        if (scanf("%d", &oraScelta) != 1) {
+        if (scanf("%d", &oraScelta)!=1) {
             while (getchar() != '\n');
             printf("Orario non disponibile ci scusiamo.\n");
-            continue;
         }
 
         // Cerca la lezione
@@ -366,20 +348,12 @@ void prenotaLezione(listaLezioni lezioni, char giorno[]) {
             if (strcmp(curr->val.desc, lezioneScelta) == 0 && curr->val.ora == oraScelta) {
                 if (curr->val.pren < curr->val.maxpren) {
                     curr->val.pren++;
-                    printf("\nPrenotazione effettuata con successo!\n");
-                    salvaListaLezioni(lezioni, giorno);
-                    return;
-                } else {
-                    printf("\nLezione piena. Vuoi scegliere un'altra lezione o un altro giorno?\n");
-                    printf("1. Altra lezione\n0. Altro giorno\nScelta: ");
-                    f (scanf("%d", &sceltaSecondaria) != 1) {
-        while (getchar() != '\n'); // pulizia buffer
-        printf("Inserisci 1 per riprovare con un'altra lezione, oppure 0 per tornare alla scelta del giorno.\n");
-        sceltaSecondaria = -1;
-    }
-} while (sceltaSecondaria != 0 && sceltaSecondaria != 1);
-
-if (sceltaSecondaria == 0) return;  // utente cambia giorno -- esce dalla funzione
-else break;                 // Riprova -- esce dal ciclo interno e torna al while principale
+                    return 1; //1 = prenotazione effettuata
+                }
+              printf("\nLezione piena.\n");
             }
+            curr = curr->next;
+        }
+     return 0; //0 = prenotazione non effettuata
+    }
 

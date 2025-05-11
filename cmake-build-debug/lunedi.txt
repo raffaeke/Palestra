@@ -1,5 +1,5 @@
 Attrezzi 8 0 40
-Yoga 8 0 20
+Yoga 8 20 20
 Attrezzi 9 0 40
 Attrezzi 10 0 40
 Attrezzi 11 0 40
