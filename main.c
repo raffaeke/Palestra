@@ -16,7 +16,8 @@ int main(void) {
     srand(time(NULL));
     bool risp=0;
     do {
-        int num_clienti =3; //rand() % 10;
+        resetFile();
+        int num_clienti =1; //rand() % 10;
         lc=rimuoviAbbonamenti(lc);
         lc=updateSettimanale(lc);  // MA SE RIMANE ATTIVO OGNI TEST SCALA GLI ABBONAMENTI
         if (settimana==0) {
@@ -46,7 +47,6 @@ int main(void) {
             if(enqueue(q,temp)!=1)printf("\nInserimento nella coda non avvenuto");
             num_clienti--;
         }
-
         int sceltamenu;
         cliente c;
         do {
@@ -83,68 +83,73 @@ int main(void) {
                                 case 1: {
                                     listaLezioni ll = newListaL();
                                     ll = loadListaL(ll,lunedi);
-                                    int controllo = prenotaLezione(ll);
+                                    int controllo = prenotaLezione(ll,lunedi);
                                     if (controllo==1) {
                                         printf("\nLezione prenotata con successo\n");
                                         contPrenotaLezione++;
                                     }
                                     else printf("\nLezione non prenotata\n");
+                                    freeListaL(ll);
                                     break;
                                 }
                                 case 2: {
                                     listaLezioni ll = newListaL();
                                     ll = loadListaL(ll,martedi);
-                                    int controllo = prenotaLezione(ll);
+                                    int controllo = prenotaLezione(ll,martedi);
                                     if (controllo==1) {
                                         printf("\nLezione prenotata con successo\n");
                                         contPrenotaLezione++;
                                     }
                                     else printf("\nLezione non prenotata\n");
-
+                                    freeListaL(ll);
                                     break;
                                 }
                                 case 3: {
                                     listaLezioni ll = newListaL();
                                     ll = loadListaL(ll,mercoledi);
-                                    int controllo = prenotaLezione(ll);
+                                    int controllo = prenotaLezione(ll,mercoledi);
                                     if (controllo==1) {
                                         printf("\nLezione prenotata con successo\n");
                                         contPrenotaLezione++;
                                     }
                                     else printf("\nLezione non prenotata\n");
+                                    freeListaL(ll);
                                     break;
                                 }
                                 case 4: {
                                     listaLezioni ll = newListaL();
                                     ll = loadListaL(ll,giovedi);
-                                    int controllo = prenotaLezione(ll);
+                                    int controllo = prenotaLezione(ll,giovedi);
                                     if (controllo==1) {
                                         printf("\nLezione prenotata con successo\n");
                                         contPrenotaLezione++;
                                     }
                                     else printf("\nLezione non prenotata\n");
+                                    freeListaL(ll);
                                     break;
                                 }
                                 case 5: {
                                     listaLezioni ll = newListaL();
                                     ll = loadListaL(ll,venerdi);
-                                    int controllo = prenotaLezione(ll);
+                                    int controllo = prenotaLezione(ll,venerdi);
                                     if (controllo==1) {
                                         printf("\nLezione prenotata con successo\n");
                                         contPrenotaLezione++;
                                     }
                                     else printf("\nLezione non prenotata\n");
+                                    freeListaL(ll);
                                     break;
                                 }
                                 case 6: {
                                     listaLezioni ll = newListaL();
                                     ll = loadListaL(ll,sabato);
-                                    int controllo = prenotaLezione(ll);
+                                    int controllo = prenotaLezione(ll,sabato);
                                     if (controllo==1) {
                                         printf("\nLezione prenotata con successo\n");
                                         contPrenotaLezione++;
                                     }
                                     else printf("\nLezione non prenotata\n");
+                                    freeListaL(ll);
                                     break;
                                 }
                                 default: printf("\nGiorno non valido");break;
@@ -160,6 +165,7 @@ int main(void) {
         printf("\nVuoi avanzare di una settimana? (1=si/0=no)\n");
         scanf("%d",&risp);
     }while (risp==1);
-
+    freeListaC(lc);
+    freeCoda(q);
     return 0;
 }

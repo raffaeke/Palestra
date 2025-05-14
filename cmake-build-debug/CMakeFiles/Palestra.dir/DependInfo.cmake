@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/Raffaele/CLionProjects/Palestra/main.c" "CMakeFiles/Palestra.dir/main.c.obj" "gcc" "CMakeFiles/Palestra.dir/main.c.obj.d"
-  "C:/Users/Raffaele/CLionProjects/Palestra/utils.c" "CMakeFiles/Palestra.dir/utils.c.obj" "gcc" "CMakeFiles/Palestra.dir/utils.c.obj.d"
+  "C:/Users/Raffaele/CLionProjects/palestra/main.c" "CMakeFiles/Palestra.dir/main.c.obj" "gcc" "CMakeFiles/Palestra.dir/main.c.obj.d"
+  "C:/Users/Raffaele/CLionProjects/palestra/utils.c" "CMakeFiles/Palestra.dir/utils.c.obj" "gcc" "CMakeFiles/Palestra.dir/utils.c.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

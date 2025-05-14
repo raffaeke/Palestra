@@ -1,5 +1,5 @@
 CMakeFiles/Palestra.dir/main.c.obj: \
- C:\Users\Raffaele\CLionProjects\Palestra\main.c \
+ C:\Users\Raffaele\CLionProjects\palestra\main.c \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include/stdio.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include/corecrt_stdio_config.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include/corecrt.h \
@@ -11,8 +11,8 @@ CMakeFiles/Palestra.dir/main.c.obj: \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include/_mingw_off_t.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include/swprintf.inl \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include/sec_api/stdio_s.h \
- C:\Users\Raffaele\CLionProjects\Palestra\cliente_lista.h \
- C:\Users\Raffaele\CLionProjects\Palestra\cliente.h \
+ C:\Users\Raffaele\CLionProjects\palestra\cliente_lista.h \
+ C:\Users\Raffaele\CLionProjects\palestra\cliente.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/stdbool.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include/stdlib.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include/corecrt_wstdlib.h \
@@ -29,6 +29,6 @@ CMakeFiles/Palestra.dir/main.c.obj: \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include/sec_api/sys/timeb_s.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include/_timeval.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.3.5/bin/mingw/x86_64-w64-mingw32/include/pthread_time.h \
- C:\Users\Raffaele\CLionProjects\Palestra\cliente_coda.h \
- C:\Users\Raffaele\CLionProjects\Palestra\lista_lezioni.h \
- C:\Users\Raffaele\CLionProjects\Palestra\lezioni.h
+ C:\Users\Raffaele\CLionProjects\palestra\cliente_coda.h \
+ C:\Users\Raffaele\CLionProjects\palestra\lista_lezioni.h \
+ C:\Users\Raffaele\CLionProjects\palestra\lezioni.h

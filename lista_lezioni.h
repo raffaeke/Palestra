@@ -14,8 +14,15 @@ listaLezioni consListaL(listaLezioni,lezione);//Aggiunge in testa la lezione pas
 
 listaLezioni loadListaL(listaLezioni,char[]); //Legge il file e carica il contenuto nella lista
 
-int prenotaLezione(listaLezioni); //prenotazione
+int prenotaLezione(listaLezioni,char[]); //prenotazione
 
 void mostraLezioniDisponibili(listaLezioni); //mostra le lezioni disponibili
 
+int disponibilitaLezione(lezione); //controlla se la lezione è disponibile
+
+void salvaListaLezioni(listaLezioni,char[]); //salva la lista in un file
+
+void resetFile(); //resetta il file delle lezioni
+
+void freeListaL(listaLezioni); //libera la memoria occupata dalla lista
 #endif //LISTA_LEZIONI_H

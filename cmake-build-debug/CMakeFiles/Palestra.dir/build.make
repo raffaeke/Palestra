@@ -52,10 +52,10 @@ RM = "C:\Program Files\JetBrains\CLion 2024.3.5\bin\cmake\win\x64\bin\cmake.exe"
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Raffaele\CLionProjects\Palestra
+CMAKE_SOURCE_DIR = C:\Users\Raffaele\CLionProjects\palestra
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\Raffaele\CLionProjects\Palestra\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\Raffaele\CLionProjects\palestra\cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Palestra.dir/depend.make
@@ -72,32 +72,32 @@ CMakeFiles/Palestra.dir/codegen:
 .PHONY : CMakeFiles/Palestra.dir/codegen
 
 CMakeFiles/Palestra.dir/main.c.obj: CMakeFiles/Palestra.dir/flags.make
-CMakeFiles/Palestra.dir/main.c.obj: C:/Users/Raffaele/CLionProjects/Palestra/main.c
+CMakeFiles/Palestra.dir/main.c.obj: C:/Users/Raffaele/CLionProjects/palestra/main.c
 CMakeFiles/Palestra.dir/main.c.obj: CMakeFiles/Palestra.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Raffaele\CLionProjects\Palestra\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/Palestra.dir/main.c.obj"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.5\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Palestra.dir/main.c.obj -MF CMakeFiles\Palestra.dir\main.c.obj.d -o CMakeFiles\Palestra.dir\main.c.obj -c C:\Users\Raffaele\CLionProjects\Palestra\main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Raffaele\CLionProjects\palestra\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/Palestra.dir/main.c.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.5\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Palestra.dir/main.c.obj -MF CMakeFiles\Palestra.dir\main.c.obj.d -o CMakeFiles\Palestra.dir\main.c.obj -c C:\Users\Raffaele\CLionProjects\palestra\main.c
 
 CMakeFiles/Palestra.dir/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/Palestra.dir/main.c.i"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.5\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Raffaele\CLionProjects\Palestra\main.c > CMakeFiles\Palestra.dir\main.c.i
+	C:\PROGRA~1\JETBRA~1\CLION2~1.5\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Raffaele\CLionProjects\palestra\main.c > CMakeFiles\Palestra.dir\main.c.i
 
 CMakeFiles/Palestra.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Palestra.dir/main.c.s"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.5\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Raffaele\CLionProjects\Palestra\main.c -o CMakeFiles\Palestra.dir\main.c.s
+	C:\PROGRA~1\JETBRA~1\CLION2~1.5\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Raffaele\CLionProjects\palestra\main.c -o CMakeFiles\Palestra.dir\main.c.s
 
 CMakeFiles/Palestra.dir/utils.c.obj: CMakeFiles/Palestra.dir/flags.make
-CMakeFiles/Palestra.dir/utils.c.obj: C:/Users/Raffaele/CLionProjects/Palestra/utils.c
+CMakeFiles/Palestra.dir/utils.c.obj: C:/Users/Raffaele/CLionProjects/palestra/utils.c
 CMakeFiles/Palestra.dir/utils.c.obj: CMakeFiles/Palestra.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Raffaele\CLionProjects\Palestra\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/Palestra.dir/utils.c.obj"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.5\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Palestra.dir/utils.c.obj -MF CMakeFiles\Palestra.dir\utils.c.obj.d -o CMakeFiles\Palestra.dir\utils.c.obj -c C:\Users\Raffaele\CLionProjects\Palestra\utils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Raffaele\CLionProjects\palestra\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/Palestra.dir/utils.c.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.5\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Palestra.dir/utils.c.obj -MF CMakeFiles\Palestra.dir\utils.c.obj.d -o CMakeFiles\Palestra.dir\utils.c.obj -c C:\Users\Raffaele\CLionProjects\palestra\utils.c
 
 CMakeFiles/Palestra.dir/utils.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/Palestra.dir/utils.c.i"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.5\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Raffaele\CLionProjects\Palestra\utils.c > CMakeFiles\Palestra.dir\utils.c.i
+	C:\PROGRA~1\JETBRA~1\CLION2~1.5\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\Raffaele\CLionProjects\palestra\utils.c > CMakeFiles\Palestra.dir\utils.c.i
 
 CMakeFiles/Palestra.dir/utils.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Palestra.dir/utils.c.s"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.5\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Raffaele\CLionProjects\Palestra\utils.c -o CMakeFiles\Palestra.dir\utils.c.s
+	C:\PROGRA~1\JETBRA~1\CLION2~1.5\bin\mingw\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\Raffaele\CLionProjects\palestra\utils.c -o CMakeFiles\Palestra.dir\utils.c.s
 
 # Object files for target Palestra
 Palestra_OBJECTS = \
@@ -113,7 +113,7 @@ Palestra.exe: CMakeFiles/Palestra.dir/build.make
 Palestra.exe: CMakeFiles/Palestra.dir/linkLibs.rsp
 Palestra.exe: CMakeFiles/Palestra.dir/objects1.rsp
 Palestra.exe: CMakeFiles/Palestra.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\Raffaele\CLionProjects\Palestra\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable Palestra.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\Raffaele\CLionProjects\palestra\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable Palestra.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Palestra.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -125,6 +125,6 @@ CMakeFiles/Palestra.dir/clean:
 .PHONY : CMakeFiles/Palestra.dir/clean
 
 CMakeFiles/Palestra.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Raffaele\CLionProjects\Palestra C:\Users\Raffaele\CLionProjects\Palestra C:\Users\Raffaele\CLionProjects\Palestra\cmake-build-debug C:\Users\Raffaele\CLionProjects\Palestra\cmake-build-debug C:\Users\Raffaele\CLionProjects\Palestra\cmake-build-debug\CMakeFiles\Palestra.dir\DependInfo.cmake "--color=$(COLOR)"
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Raffaele\CLionProjects\palestra C:\Users\Raffaele\CLionProjects\palestra C:\Users\Raffaele\CLionProjects\palestra\cmake-build-debug C:\Users\Raffaele\CLionProjects\palestra\cmake-build-debug C:\Users\Raffaele\CLionProjects\palestra\cmake-build-debug\CMakeFiles\Palestra.dir\DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/Palestra.dir/depend
 

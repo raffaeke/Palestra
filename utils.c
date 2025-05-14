@@ -192,6 +192,16 @@ listaCliente updateSettimanale(listaCliente l) {
     }
     return l;
 }
+
+void freeListaC(listaCliente l) {
+    struct node_c *curr=l->testa;
+    while (curr!=NULL) {
+        struct node_c *temp=curr;
+        curr=curr->next;
+        free(temp);
+    }
+    free(l);
+}
 //-----------------FUNZIONI CODA_CLIENTE------------------------------------------
 codaCliente newCoda() {
     codaCliente q=malloc(sizeof(struct CodaCliente)); //alloco lo spazio per creare la coda
@@ -236,6 +246,15 @@ cliente dequeue(codaCliente q) {
     if (q->testa==NULL) q->coda=NULL; //se la testa della coda è vuota lo sara anche la fine
     q->num_clienti--;
     return ris;
+}
+void freeCoda(codaCliente q) {
+    struct node_c *curr=q->testa;
+    while (curr!=NULL) {
+        struct node_c *temp=curr;
+        curr=curr->next;
+        free(temp);
+    }
+    free(q);
 }
 //-----------------FUNZIONI CLIENTE_H -------------------------------------------------
 void output_cliente(cliente c) {
@@ -316,8 +335,22 @@ void mostraLezioniDisponibili(listaLezioni lezioni) {
         curr = curr->next;
     }
 }
-
-int prenotaLezione(listaLezioni lezioni) {
+void salvaListaLezioni(listaLezioni lezioni, char filename[]) {
+    FILE *f = fopen(filename, "w");
+    if (f == NULL) {
+        perror("Errore apertura file per salvataggio");
+        return;
+    }
+    struct node_l *curr = lezioni->testa;
+    while (curr != NULL) {
+        fprintf(f, "%s %d %d %d\n",
+                curr->val.desc, curr->val.ora,
+                curr->val.pren, curr->val.maxpren);
+        curr = curr->next;
+    }
+    fclose(f);
+}
+int prenotaLezione(listaLezioni lezioni,char nomefile[]) {
     char lezioneScelta[15];
     int oraScelta;
         mostraLezioniDisponibili(lezioni);
@@ -349,12 +382,21 @@ int prenotaLezione(listaLezioni lezioni) {
         }
 
         // Cerca la lezione
-        struct node_l *curr = lezioni->testa;
+        struct node_l *curr =lezioni->testa;
         while (curr != NULL) {
+            int risposta = 0;
             if (strcmp(curr->val.desc, lezioneScelta) == 0 && curr->val.ora == oraScelta) {
-                if (curr->val.pren < curr->val.maxpren) {
-                    curr->val.pren++;
+                printf("\nLa lezione selezionata ha %d/%d posti\n", curr->val.pren, curr->val.maxpren);
+                if (disponibilitaLezione(curr->val)>0) {
+                    printf("\nVuoi prenotare la lezione? si=1|no=0 :");
+                    scanf("%d", &risposta);
+                    if (risposta == 1) {
+                        curr->val.pren++;
+                        printf("\nSei il %d^ cliente della lezione\n", curr->val.pren);
+                        salvaListaLezioni(lezioni, nomefile);
                     return 1; //1 = prenotazione effettuata
+                        }
+
                 }
               printf("\nLezione piena.\n");
             }
@@ -363,3 +405,31 @@ int prenotaLezione(listaLezioni lezioni) {
      return 0; //0 = prenotazione non effettuata
     }
 
+int disponibilitaLezione(lezione l) {
+    return l.maxpren-l.pren;
+}
+
+void resetFile() {
+    listaLezioni ll=newListaL();
+    char *nomefile[]={lunedi,martedi,mercoledi,giovedi,venerdi,sabato};
+    for (int i=0;i<6;i++) {
+        ll=loadListaL(ll,nomefile[i]);
+        struct node_l *curr=ll->testa;
+        while (curr!=NULL) {
+            curr->val.pren=0;
+            curr=curr->next;
+        }
+        salvaListaLezioni(ll,nomefile[i]);
+    }
+    freeListaL(ll);
+}
+
+void freeListaL(listaLezioni l) {
+    struct node_l *curr=l->testa;
+    while (curr!=NULL) {
+        struct node_l *temp=curr;
+        curr=curr->next;
+        free(temp);
+    }
+    free(l);
+}

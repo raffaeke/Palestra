@@ -32,4 +32,6 @@ int RinnovaAbbonamento(listaCliente,cliente, int); //Aggiunge alla durata abbona
 
 int annullaAbbonamento(listaCliente,cliente); //Va a impostare la durata abbonamento del cliente passato a 0
 //restitusce 1 se è andata a buon fine, 0 altrimenti
+
+void freeListaC(listaCliente); //Libera la memoria occupata dalla lista
 #endif //CLIENTE_LISTA_H

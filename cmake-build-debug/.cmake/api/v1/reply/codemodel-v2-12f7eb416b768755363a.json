@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/Raffaele/CLionProjects/Palestra/cmake-build-debug",
-		"source" : "C:/Users/Raffaele/CLionProjects/Palestra"
+		"build" : "C:/Users/Raffaele/CLionProjects/palestra/cmake-build-debug",
+		"source" : "C:/Users/Raffaele/CLionProjects/palestra"
 	},
 	"version" : 
 	{
