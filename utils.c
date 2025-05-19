@@ -410,9 +410,9 @@ int disponibilitaLezione(lezione l) {
 }
 
 void resetFile() {
-    listaLezioni ll=newListaL();
     char *nomefile[]={lunedi,martedi,mercoledi,giovedi,venerdi,sabato};
     for (int i=0;i<6;i++) {
+        listaLezioni ll=newListaL();
         ll=loadListaL(ll,nomefile[i]);
         struct node_l *curr=ll->testa;
         while (curr!=NULL) {
@@ -420,8 +420,9 @@ void resetFile() {
             curr=curr->next;
         }
         salvaListaLezioni(ll,nomefile[i]);
+        freeListaL(ll);
     }
-    freeListaL(ll);
+
 }
 
 void freeListaL(listaLezioni l) {
