@@ -14,7 +14,7 @@ listaLezioni consListaL(listaLezioni,lezione);//Aggiunge in testa la lezione pas
 
 listaLezioni loadListaL(listaLezioni,char[]); //Legge il file e carica il contenuto nella lista
 
-int prenotaLezione(listaLezioni,char[]); //prenotazione
+int prenotaLezione(listaLezioni,char[],int[]); //prenotazione
 
 void mostraLezioniDisponibili(listaLezioni); //mostra le lezioni disponibili
 

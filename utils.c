@@ -26,11 +26,25 @@ struct node_l {
 struct ListaLezioni {
     struct node_l *testa;
 };
-void init(int *c1,int *c2,int *c3,int *c4) {
+void init(int *c1,int *c2,int *c3,int *c4,int c5[]) {
     *c1=0;
      *c2=0;
      *c3=0;
      *c4=0;
+    for (int i=0;i<5;i++) {
+        c5[i]=0;
+    }
+}
+int maxLezioni(int cont[]) {
+    int max=0;
+    int contMax=0;
+    for (int i=0;i<5;i++) {
+        if (cont[i]>max) {
+            max=cont[i];
+            contMax=i;
+        }
+    }
+    return contMax;
 }
 //-----------------FUNZIONI LISTA_CLIENTE------------------------------------------
 listaCliente newListaC() {
@@ -350,15 +364,15 @@ void salvaListaLezioni(listaLezioni lezioni, char filename[]) {
     }
     fclose(f);
 }
-int prenotaLezione(listaLezioni lezioni,char nomefile[]) {
+int prenotaLezione(listaLezioni lezioni,char nomefile[],int contLezioni[]) {
     char lezioneScelta[15];
     int oraScelta;
         mostraLezioniDisponibili(lezioni);
 
         // Menu numerato
-        const char* lezioniDisponibili[] = {
-            "Attrezzi", "Yoga", "Karate", "Pilates", "Funzionale", "Fitness", "Zumba"
-        };
+    const char* lezioniDisponibili[] = {
+        "Attrezzi", "Yoga", "Karate", "Pilates", "Funzionale", "Fitness", "Zumba"
+    };
         int scelta = -1;
         printf("\nSeleziona una lezione tra le seguenti:\n");
         for (int i = 0; i < 7; i++) {
@@ -391,6 +405,7 @@ int prenotaLezione(listaLezioni lezioni,char nomefile[]) {
                     printf("\nVuoi prenotare la lezione? si=1|no=0 :");
                     scanf("%d", &risposta);
                     if (risposta == 1) {
+                        contLezioni[scelta-1]++;
                         curr->val.pren++;
                         printf("\nSei il %d^ cliente della lezione\n", curr->val.pren);
                         salvaListaLezioni(lezioni, nomefile);

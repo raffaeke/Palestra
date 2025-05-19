@@ -4,13 +4,15 @@
 #include <time.h>
 #include "cliente_coda.h"
 #include "lista_lezioni.h"
-void init(int * cont_cliente, int * cont_new_abbonamento, int * cont_rinnova_abbonamento, int * cont_annulla_abbonamento, int * cont_prenota_lezione);
+void init(int * cont_cliente, int * cont_new_abbonamento, int * cont_rinnova_abbonamento, int * cont_annulla_abbonamento, int * cont_prenota_lezione,int contLezioni);
+int maxLezioni(int contLezioni[]);
 
 int main(void) {
     int contNewAbbonamento=0,contRinnovaAbbonamento=0,contAnnullaAbbonamento=0,contPrenotaLezione=0;
     int settimana=0;
     listaCliente lc = newListaC();
     int contCliente=0;
+    int contLezioni[7]={0,0,0,0,0,0,0};
     codaCliente q=newCoda();
     lc=LoadInizio(lc);
     srand(time(NULL));
@@ -22,14 +24,18 @@ int main(void) {
         lc=updateSettimanale(lc);  // MA SE RIMANE ATTIVO OGNI TEST SCALA GLI ABBONAMENTI
         if (settimana==0) {
             contCliente=sizeListaC(lc); //CONTA I CLIENTI A INIZIO MESE
-            init(&contCliente,&contNewAbbonamento,&contRinnovaAbbonamento,&contAnnullaAbbonamento,&contPrenotaLezione);
+            init(&contCliente,&contNewAbbonamento,&contRinnovaAbbonamento,&contAnnullaAbbonamento,&contPrenotaLezione,contLezioni);
         }
         if (settimana==5) {
+            const char* lezioniDisponibili[] = {
+                "Attrezzi", "Yoga", "Karate", "Pilates", "Funzionale", "Fitness", "Zumba"
+            };
             printf("\nReport mensile:\nAbbonamenti totali prima e dopo: %d->%d\n",contCliente,sizeListaC(lc));
             printf("\nNuovi abbonamenti: %d\n",contNewAbbonamento);
             printf("\nAbbonamenti rinnovati: %d\n",contRinnovaAbbonamento);
             printf("\nAbbonamenti annullati: %d\n",contAnnullaAbbonamento);
             printf("\nPrenotazioni totali: %d\n",contPrenotaLezione);
+            printf("\nLa lezione che ha ricevuto più prenotazioni è la %s",lezioniDisponibili[maxLezioni(contLezioni)]);
             system("pause");
             settimana=0;
         }
@@ -83,7 +89,7 @@ int main(void) {
                                 case 1: {
                                     listaLezioni ll = newListaL();
                                     ll = loadListaL(ll,lunedi);
-                                    int controllo = prenotaLezione(ll,lunedi);
+                                    int controllo = prenotaLezione(ll,lunedi,contLezioni);
                                     if (controllo==1) {
                                         printf("\nLezione prenotata con successo\n");
                                         contPrenotaLezione++;
@@ -95,7 +101,7 @@ int main(void) {
                                 case 2: {
                                     listaLezioni ll = newListaL();
                                     ll = loadListaL(ll,martedi);
-                                    int controllo = prenotaLezione(ll,martedi);
+                                    int controllo = prenotaLezione(ll,martedi,contLezioni);
                                     if (controllo==1) {
                                         printf("\nLezione prenotata con successo\n");
                                         contPrenotaLezione++;
@@ -107,7 +113,7 @@ int main(void) {
                                 case 3: {
                                     listaLezioni ll = newListaL();
                                     ll = loadListaL(ll,mercoledi);
-                                    int controllo = prenotaLezione(ll,mercoledi);
+                                    int controllo = prenotaLezione(ll,mercoledi,contLezioni);
                                     if (controllo==1) {
                                         printf("\nLezione prenotata con successo\n");
                                         contPrenotaLezione++;
@@ -119,7 +125,7 @@ int main(void) {
                                 case 4: {
                                     listaLezioni ll = newListaL();
                                     ll = loadListaL(ll,giovedi);
-                                    int controllo = prenotaLezione(ll,giovedi);
+                                    int controllo = prenotaLezione(ll,giovedi,contLezioni);
                                     if (controllo==1) {
                                         printf("\nLezione prenotata con successo\n");
                                         contPrenotaLezione++;
@@ -131,7 +137,7 @@ int main(void) {
                                 case 5: {
                                     listaLezioni ll = newListaL();
                                     ll = loadListaL(ll,venerdi);
-                                    int controllo = prenotaLezione(ll,venerdi);
+                                    int controllo = prenotaLezione(ll,venerdi,contLezioni);
                                     if (controllo==1) {
                                         printf("\nLezione prenotata con successo\n");
                                         contPrenotaLezione++;
@@ -143,7 +149,7 @@ int main(void) {
                                 case 6: {
                                     listaLezioni ll = newListaL();
                                     ll = loadListaL(ll,sabato);
-                                    int controllo = prenotaLezione(ll,sabato);
+                                    int controllo = prenotaLezione(ll,sabato,contLezioni);
                                     if (controllo==1) {
                                         printf("\nLezione prenotata con successo\n");
                                         contPrenotaLezione++;
