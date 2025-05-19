@@ -3,12 +3,9 @@ Yoga 8 0 20
 Attrezzi 9 0 40
 Attrezzi 10 0 40
 Attrezzi 11 0 40
-Pilates 11 0 20
 Attrezzi 12 0 40
 Attrezzi 13 0 40
 Attrezzi 14 0 40
-Yoga 14 0 20
 Attrezzi 15 0 40
 Attrezzi 16 0 40
 Attrezzi 17 0 40
-Attrezzi 18 0 40
