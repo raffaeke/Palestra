@@ -4,7 +4,7 @@
 #include <time.h>
 #include "cliente_coda.h"
 #include "lista_lezioni.h"
-void init(int * cont_cliente, int * cont_new_abbonamento, int * cont_rinnova_abbonamento, int * cont_annulla_abbonamento, int * cont_prenota_lezione,int contLezioni);
+void init(int * cont_cliente, int * cont_new_abbonamento, int * cont_rinnova_abbonamento, int * cont_annulla_abbonamento, int * cont_prenota_lezione,int contLezioni[]);
 int maxLezioni(int contLezioni[]);
 
 int main(void) {
@@ -16,7 +16,7 @@ int main(void) {
     codaCliente q=newCoda();
     lc=LoadInizio(lc);
     srand(time(NULL));
-    bool risp=0;
+    int risp=0;
     do {
         resetFile();
         int num_clienti =1; //rand() % 10;
@@ -43,7 +43,7 @@ int main(void) {
         while(num_clienti>0) {
             char cod_fiscale[17];
             printf("\nInserisci identificativo (codice fiscale)\n");
-            fflush(stdin);
+            while (getchar()!='\n');
             gets(cod_fiscale);
             cliente temp = trovaCliente(lc, cod_fiscale);
             if (clienteNULL(temp)) {

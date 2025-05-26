@@ -67,6 +67,19 @@ listaCliente consListaC(listaCliente l, const cliente c) {
     return l;
 }
 
+/*    loadInizio: carica i dati degli abbonati dal file.
+ *    Precondizione: la lista deve essere possibilmente vuota,
+      inoltre deve esistere un file definito come "NOMEFILE".
+
+     Postcondizione: restituisce una lista contenente tutti gli
+     abbonati con abbonamento maggiore di 0 letti dal file.
+
+     Funzionamento: Apriamo il file degli abbonati in modalità lettura,
+     leggiamo riga per riga ed estraggo i dati. Controllo la durata degli
+     abbonamenti per vedere se tutti hanno ancora accesso alla lista
+     abbonati e se viene trovato qualcuno con l abbonamento scaduto andiamo
+     a chiamare una funzione che aggiorna anche il file. Chiudiamo il file
+     e restituiamo la lista caricata.*/
 listaCliente LoadInizio(listaCliente l) {
     cliente temp;
     bool flag=false; //Variabile utilizzata per controllare un eventuale uso di updateFileAbb()
@@ -89,18 +102,19 @@ listaCliente LoadInizio(listaCliente l) {
     return l;
 }
 
-void visualListaC(listaCliente l) {
-    const struct node_c *p=l->testa; //puntatore alla testa della lista
-    if (!emptyListaC(l)) { //controllo se la lista è vuota
-       while (p!=NULL) { //finché il puntatore non arriva alla fine della lista
-           output_cliente(p->val); //stampo i dati del nodo
-           p=p->next; //Avanzo di nodo
-       }
-    }
-    else printf("Lista vuota");
-
-}
-
+/*  rimuoviAbbonamenti: rimuove chi ha l abbonamento scaduto o annullato.
+ *
+ *  Precondizione: la lista deve contenere dei clienti,
+ *  o eventualmente essere vuota.
+ *
+ *  Postcondizione: restituisce una lista contenente tutti gli
+ *  abbonati con abbonamento maggiore di 0 letti dal file.
+ *
+ *  Funzionamento: Usiamo due puntatori, corrente per scorrere la lista,
+ *  precedente invece punta all'elemento prima per collegare la lista
+ *  nel caso in cui ci sia una rimozione nel mezzo.
+ *  Restituiamo la lista aggiornata.
+ */
 listaCliente rimuoviAbbonamenti(listaCliente l) {
     struct node_c *corr=l->testa; //nodo corrente
     struct node_c *prec=NULL; //puntatore al nodo precedente
@@ -108,16 +122,38 @@ listaCliente rimuoviAbbonamenti(listaCliente l) {
     while (corr!=NULL) { //finché il puntatore non arriva alla fine della lista
         if (corr->val.abb<=0) { //se l abbonamento è minore o uguale a 0
             output_cliente(corr->val); //stampo i dati del cliente
-            if (prec==NULL) l->testa=corr->next; //Il nodo da eliminare è in testa
-            else prec->next=corr->next; //Salta il nodo da eliminare collegando il precedente al successivo
-            free(corr); //Libera lo spazio del nodo corrente
-            return l;
+            if (prec==NULL) {
+                l->testa=corr->next; //Il nodo da eliminare è in testa
+                free(corr);
+                corr=l->testa;
+            } else {
+                prec->next=corr->next; //Salta il nodo da eliminare collegando il precedente al successivo
+                free(corr); //Libera lo spazio del nodo corrente
+                corr=prec->next;
+            }
         }
-        prec=corr; //Il precedente prende il valore del nodo corrente
-        corr=corr->next; //il nodo corrente avanza
+        else {
+            prec=corr; //Il precedente prende il valore del nodo corrente
+            corr=corr->next; //il nodo corrente avanza
+        }
     }
     return l;
 }
+
+/*  RinnovaAbbonamento: rinnova l abbonamento di un cliente.
+*  Precondizione:la lista deve essere caricata,
+*  cliente c non deve essere NULL,
+*  r deve essere maggiore di 0
+*
+    Postcondizione: Incrementa le settimane di abbonamento
+    del cliente passato di r settimane
+
+    Funzionamento: Usiamo un puntatore per scorrere la lista,
+    cerchiamo il cliente nella lista, se lo troviamo sommiamo
+    r alle sue settimane di abbonamento e ritorniamo 1 perche
+    è andata a buon fine l'operazione. Se non trova il cliente
+    o altro ritorna 0.
+ */
 int RinnovaAbbonamento(listaCliente l, const cliente c, const int r) {
     struct node_c *p=l->testa; //puntatore alla testa della lista
     if (!emptyListaC(l)) {
@@ -131,6 +167,16 @@ int RinnovaAbbonamento(listaCliente l, const cliente c, const int r) {
         }}
     return 0; //non va a buon fine
 }
+/*    updateFileAbb: Scrive su file solo chi ha abb>0.
+*    Precondizione: la lista deve contenere tutti gli abbonati
+*    validi, deve essere definita una macro "NOMEFILE".
+
+     Postcondizione:Il file passato verrà riempito da capo con
+     gli elementi della lista.
+
+    Funzionamento: Apriamo il file in scrittura, scorriamo la lista
+    tramite un puntatore e ogni nodo viene scritto sul file.
+*/
 void updateFileAbb(listaCliente l) {
     FILE *f = fopen(NOMEFILE, "w"); //apertura file in scrittura
     struct node_c *p=l->testa; //puntatore alla testa della lista
@@ -157,6 +203,19 @@ int sizeListaC(listaCliente l) {
     return cont;
 }
 
+/*      trovaCliente: trova un cliente nella lista.
+ *       Precondizione: la lista deve contenere dei clienti,
+        o eventualmente essere vuota. Cod è una stringa che
+        contiene il codice fiscale da ricercare.
+
+         Postcondizione: se esiste un cliente nella lista con
+         quel codice fiscale lo restituisce. Se invece non viene
+         trovato, restituiamo NULLCLIENTE.
+
+        Funzionamento: Controlliamo se la lista è vuota, poi viene
+        creato un puntatore alla testa della lista in modo da visitare
+        l'intera lista, se trova il cliente con il codice fiscale
+        passato lo restituisce altrimenti passa la versione NULL di cliente.*/
 cliente trovaCliente(listaCliente l,char cod[]) {
     struct node_c *p=l->testa; //puntatore alla testa della lista
     if (!emptyListaC(l)) {
@@ -183,6 +242,19 @@ cliente NewAbbonamento(listaCliente l) {
     updateFileAbb(l); //aggiorno il file con il nuovo abbonato
  return temp;
 }
+
+/*  AnnullaAbbonamento: annulla l abbonamento di un cliente.
+*  Precondizione: la lista può contenere 0 o più nodi,
+*  la struttura cliente passata deve essere valida.
+*
+    Postcondizione: al cliente passato viene settato il
+    campo abbonamento a 0, restituisce 1 se è andata a buon
+    fine la funzione, 0 altrimenti.
+
+    Funzionamento: Scorriamo la lista fino a quando non troviamo
+    un incrocio tra nodo e cliente, se lo trova setta l'abbonamento
+    a 0 e ritorna 1. Se non lo trova ritorna 0.
+ */
 int annullaAbbonamento(listaCliente l, const cliente c) {
     struct node_c *p=l->testa; //puntatore alla testa della lista
     if (!emptyListaC(l)) {
@@ -196,6 +268,18 @@ int annullaAbbonamento(listaCliente l, const cliente c) {
     }
     return 0; //la funzione non è andata a buon fine
 }
+
+/*      updateSettimanale: ogni settimana passata diminuisce
+ *      di 1 l abbonamento dei clienti.
+ *
+*       Precondizione:La lista l è correttamente riempita,
+*       anche se può essere vuota.
+        Postcondizione: a ogni cliente viene decrementato di 1 l'abbonamento.
+
+        Funzionamento: Controllo se la lista è vuota, se non lo è
+        scorro la lista e decremento il valore dell'abbonamento.
+        Restituisco la lista con i valori aggiornati.
+*/
 listaCliente updateSettimanale(listaCliente l) {
     struct node_c *p=l->testa; //puntatore alla testa della lista
     if (!emptyListaC(l)) {
@@ -318,18 +402,25 @@ void visualListaL(listaLezioni l) {
         }
     }else printf("Lista vuota");
 }
-listaLezioni consListaL(listaLezioni l,lezione lez) {
-    struct node_l *nuovo=malloc(sizeof(struct node_l)); //Alloca lo spazio per un nuovo nodo
-    if (nuovo!=NULL) {//controllo sulla malloc
-        nuovo->val=lez;//assegno il valore al nodo
-        nuovo->next=l->testa; //lo collego alla lista
-        l->testa=nuovo;//diventa la testa della lista
+listaLezioni consListaL(listaLezioni l, lezione lez) {
+    struct node_l *nuovo = malloc(sizeof(struct node_l));
+    nuovo->val = lez;
+    nuovo->next = NULL;
+        if (l->testa == NULL) {
+        l->testa = nuovo;
+        return l;
     }
+
+    struct node_l *curr = l->testa;
+    while (curr->next != NULL) {
+        curr = curr->next;
+    }
+    curr->next = nuovo;
     return l;
 }
 listaLezioni loadListaL(listaLezioni l,char file[]) {
     FILE *f = fopen(file, "r"); //apro il file in lettura
-    if (f==NULL) { //controllo sull aperuta del file
+    if (f==NULL) { //controllo sull apertura del file
         perror("File non aperto");
     }
     char buffer[256]; //variabile temporanea per prelevare dal file
