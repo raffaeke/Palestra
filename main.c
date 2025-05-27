@@ -43,7 +43,8 @@ int main(void) {
         while(num_clienti>0) {
             char cod_fiscale[17];
             printf("\nInserisci identificativo (codice fiscale)\n");
-            while (getchar()!='\n');
+            fflush(stdin);
+            fflush(stdin);
             gets(cod_fiscale);
             cliente temp = trovaCliente(lc, cod_fiscale);
             if (clienteNULL(temp)) {

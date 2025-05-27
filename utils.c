@@ -327,7 +327,7 @@ int enqueue(codaCliente q, const cliente c) {
     if (nuovo==NULL) {
         return 0;
     }
-    nuovo->val=c; //assegna il cliente dato come parametro al valore del nuovo nodo
+    setCliente(&(nuovo->val), &c);
     nuovo->next=NULL;
     if (q->testa==NULL) q->testa=nuovo; //se è il primo elemento della coda diventa la testa
     else q->coda->next=nuovo; // Altrimenti, collega il nuovo nodo alla fine della coda
@@ -337,7 +337,8 @@ int enqueue(codaCliente q, const cliente c) {
 }
 cliente dequeue(codaCliente q) {
     if (q==NULL || q->num_clienti==0 ) return NULL_CLIENTE; //Se la coda è vuota ritorno null
-    cliente ris=q->testa->val; //prelevo il cliente
+    cliente ris;
+    setCliente(&ris, &(q->testa->val));
     struct node_c *temp=q->testa;
     q->testa=q->testa->next; //avanzo di un nodo
     free(temp);
@@ -358,18 +359,61 @@ void freeCoda(codaCliente q) {
 void output_cliente(cliente c) {
     printf("%s\t%-10s\t%-10s\t%-10s\t%-5d\n",c.cod_fis,c.nome,c.cogn,c.data,c.abb);
 }
-/*cliente input_cliente(char cod[],char n[],char c[],char d[], const int a) {
-    cliente temp;
-    strcpy(temp.cod_fis,cod);
-    strcpy(temp.nome,n);
-    strcpy(temp.cogn,c);
-    strcpy(temp.data,d);
-    temp.abb=a;
-    return temp;
-}*/
+
 bool clienteNULL(cliente c) {
     if ((strcmp(c.cod_fis,"")==0) && (strcmp(c.nome,"")==0) && (strcmp(c.cogn,"")==0) && (strcmp(c.data,"")==0) && (c.abb==0)) return true;
     else return false;
+}
+
+void setCodFis(cliente* c, const char* cod) {
+    strncpy(c->cod_fis, cod, 16);
+    c->cod_fis[16] = '\0';
+}
+
+void setNome(cliente* c, const char* nome) {
+    strncpy(c->nome, nome, MAX_L - 1);
+    c->nome[MAX_L - 1] = '\0';
+}
+
+void setCognome(cliente* c, const char* cogn) {
+    strncpy(c->cogn, cogn, MAX_L - 1);
+    c->cogn[MAX_L - 1] = '\0';
+}
+
+void setData(cliente* c, const char* data) {
+    strncpy(c->data, data, 10);
+    c->data[10] = '\0';
+}
+
+void setAbbonamento(cliente* c, int abb) {
+    c->abb = abb;
+}
+void setCliente(cliente* dest, const cliente* src) {
+    setCodFis(dest, getCodFis(src));
+    setNome(dest, getNome(src));
+    setCognome(dest, getCognome(src));
+    setData(dest, getData(src));
+    setAbbonamento(dest, getAbbonamento(src));
+}
+
+const char* getCodFis(const cliente* c) {
+    return c->cod_fis;
+}
+
+const char* getNome(const cliente* c) {
+    return c->nome;
+}
+
+const char* getCognome(const cliente* c) {
+    return c->cogn;
+}
+
+const char* getData(const cliente* c) {
+    return c->data;
+}
+
+int getAbbonamento(const cliente* c) {
+    return c->abb;
 }
 //-----------------FUNZIONI LEZIONI_H---------------------------------------------------------
 void output_lezione(lezione lez) {
@@ -470,7 +514,14 @@ listaLezioni loadListaL(listaLezioni l,char file[]) {
     char buffer[256]; //variabile temporanea per prelevare dal file
     while (fgets(buffer, sizeof(buffer), f)) { //finchè trova righe scritte nel file va avanti
         lezione temp;
-        sscanf(buffer, "%s %d %d %d",temp.desc,&temp.ora,&temp.pren,&temp.maxpren); //prelevo
+        char desc[MAX_L];
+        int ora, pren, maxpren;
+        if (sscanf(buffer, "%s %d %d %d",desc,&ora,&pren,&maxpren)== 4) {
+            setDesc(&temp, desc);
+            setOra(&temp, ora);
+            setPren(&temp, pren);
+            setMaxPren(&temp, maxpren);
+        }
         l=consListaL(l,temp); //aggiungo alla lista
     }
     fclose(f); //chiudo il file
@@ -512,9 +563,10 @@ void salvaListaLezioni(listaLezioni lezioni, char filename[]) {
     }
     struct node_l *curr = lezioni->testa;
     while (curr != NULL) {
-        fprintf(f, "%s %d %d %d\n",
-                curr->val.desc, curr->val.ora,
-                curr->val.pren, curr->val.maxpren);
+        fprintf(f, "%s %d %d %d\n",getDesc(&(curr->val)),
+                getOra(&(curr->val)),
+                getPren(&(curr->val)),
+                getMaxPren(&(curr->val)));
         curr = curr->next;
     }
     fclose(f);
@@ -575,21 +627,23 @@ int prenotaLezione(listaLezioni lezioni,char nomefile[],int contLezioni[]) {
         struct node_l *curr =lezioni->testa;
         while (curr != NULL) {
             int risposta = 0;
-            if (strcmp(curr->val.desc, lezioneScelta) == 0 && curr->val.ora == oraScelta) {
-                printf("\nLa lezione selezionata ha %d/%d posti\n", curr->val.pren, curr->val.maxpren);
+            if (strcmp(getDesc(&(curr->val)), lezioneScelta) == 0 && getOra(&(curr->val)) == oraScelta) {
+                int pren = getPren(&(curr->val));
+                int maxpren = getMaxPren(&(curr->val));
+                printf("\nLa lezione selezionata ha %d/%d posti\n",pren,maxpren);
                 if (disponibilitaLezione(curr->val)>0) {
                     printf("\nVuoi prenotare la lezione? si=1|no=0 :");
                     scanf("%d", &risposta);
                     if (risposta == 1) {
                         contLezioni[scelta-1]++;
-                        curr->val.pren++;
-                        printf("\nSei il %d^ cliente della lezione\n", curr->val.pren);
+                        setPren(&(curr->val), pren + 1);
+                        printf("\nSei il %d^ cliente della lezione\n", getPren(&(curr->val)));
                         salvaListaLezioni(lezioni, nomefile);
                     return 1; //1 = prenotazione effettuata
                         }
 
                 }
-              printf("\nLezione piena.\n");
+
             }
             curr = curr->next;
         }
@@ -606,7 +660,7 @@ int prenotaLezione(listaLezioni lezioni,char nomefile[],int contLezioni[]) {
     massimo di posti prenotabili e quelli prenotati.
  */
 int disponibilitaLezione(lezione l) {
-    return l.maxpren-l.pren;
+    return getMaxPren(&l) - getPren(&l);
 }
 
 /*  resetFile: inizializzo il numero di prenotazioni di ogni lezione
@@ -627,7 +681,7 @@ void resetFile() {
         ll=loadListaL(ll,nomefile[i]);
         struct node_l *curr=ll->testa;
         while (curr!=NULL) {
-            curr->val.pren=0;
+            setPren(&(curr->val), 0);
             curr=curr->next;
         }
         salvaListaLezioni(ll,nomefile[i]);

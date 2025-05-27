@@ -11,8 +11,19 @@ typedef struct{
 }cliente;
 extern const cliente NULL_CLIENTE;
 
-//cliente input_cliente(char[],char[],char[],char[],int); //Prende come parametri i valori per riempiere
-//la struct ciente e restituisce una variabile cliente con quei dati al suo interno
+//Set
+void setCodFis(cliente*, const char*);
+void setNome(cliente*, const char*);
+void setCognome(cliente*, const char*);
+void setData(cliente*, const char*);
+void setAbbonamento(cliente*, int);
+void setCliente(cliente*, const cliente*);
+//Get
+const char* getCodFis(const cliente*);
+const char* getNome(const cliente*);
+const char* getCognome(const cliente*);
+const char* getData(const cliente*);
+int getAbbonamento(const cliente*);
 
 void output_cliente(cliente);//Stampa il contenuto della struct
 

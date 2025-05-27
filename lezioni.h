@@ -15,7 +15,6 @@ typedef struct {
     int maxpren; //numero massimo di posti
 }lezione;
 
-//lezione input_lezione(char[],int,int,int);
 void output_lezione(lezione);
 
 //get
