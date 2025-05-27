@@ -376,7 +376,40 @@ void output_lezione(lezione lez) {
     printf("Lezione: %s | Ora: %d | Prenotati: %d/%d\n",
                lez.desc, lez.ora, lez.pren, lez.maxpren);
 }
+const char* getDesc(const lezione* l) {
+    return l->desc;
+}
 
+int getOra(const lezione* l) {
+    return l->ora;
+}
+
+int getPren(const lezione* l) {
+    return l->pren;
+}
+
+int getMaxPren(const lezione* l) {
+    return l->maxpren;
+}
+
+void setDesc(lezione* l, const char* desc) {
+    strncpy(l->desc, desc, MAX_L - 1);
+    l->desc[MAX_L - 1] = '\0';
+}
+
+void setOra(lezione* l, int ora) {
+    if (ora >= 0 && ora <= 23) {
+        l->ora = ora;
+    }
+}
+
+void setPren(lezione* l, int pren) {
+        l->pren = pren;
+}
+
+void setMaxPren(lezione* l, int maxpren) {
+        l->maxpren = maxpren;
+}
 //-----------------FUNZIONI LISTA_LEZIONI_H---------------------------------------------------
 
 listaLezioni newListaL() {
@@ -418,6 +451,17 @@ listaLezioni consListaL(listaLezioni l, lezione lez) {
     curr->next = nuovo;
     return l;
 }
+
+/*  loadListaL: Legge il file e carica il contenuto nella lista
+*
+*   Precondizione: file deve essere il nome corretto del file da aprire
+*   e avere il formato corretto dei dati mentre la lista l deve essere inizializzata.
+
+    Postcondizione: La lista verrà riempita con tutte le lezioni scritte nel file.
+
+    Funzionamento: Apriamo il file in lettura, leggiamo riga per riga il file e
+    inseriamo in coda alla lista ogni lezione. Chiudiamo il file e ritorno la lista caricata.
+ */
 listaLezioni loadListaL(listaLezioni l,char file[]) {
     FILE *f = fopen(file, "r"); //apro il file in lettura
     if (f==NULL) { //controllo sull apertura del file
@@ -432,6 +476,15 @@ listaLezioni loadListaL(listaLezioni l,char file[]) {
     fclose(f); //chiudo il file
     return l; //ritorno la lista aggiornata
 }
+
+/*  mostraLezioniDisponibili: visualizza l'elenco delle lezioni
+ *
+*   Precondizione:la lista deve contenere almeno una lezione.
+*
+    Postcondizione: vengono stampate a schermo tutte le lezioni.
+    Funzionamento: Usiamo un puntatore per scorrere la lista,
+    e stamperemo ogni nodo fino alla fine della lista.
+ */
 void mostraLezioniDisponibili(listaLezioni lezioni) {
     struct node_l *curr = lezioni->testa;
     printf("\nLezioni disponibili:\n");
@@ -440,6 +493,17 @@ void mostraLezioniDisponibili(listaLezioni lezioni) {
         curr = curr->next;
     }
 }
+
+/*  salvaListaLezioni: salva il contenuto della lista in un file
+*   Precondizione: la lista l deve essere valida e caricata,
+*   file deve essere il nome del file da aprire.
+*
+    Postcondizione: tutte le lezioni presenti nella lista vengono scritte nel file.
+
+    Funzionamento: apriamo il file in scrittura, usiamo un puntatore
+    per scorrere la lista e ogni nodo viene scritto sul file nel
+    formato predefinito, e infine chiudiamo il file.
+ */
 void salvaListaLezioni(listaLezioni lezioni, char filename[]) {
     FILE *f = fopen(filename, "w");
     if (f == NULL) {
@@ -455,6 +519,27 @@ void salvaListaLezioni(listaLezioni lezioni, char filename[]) {
     }
     fclose(f);
 }
+
+/*  prenotaLezione: aggiunge una prenotazione alla lezione scelta dall'utente
+ *
+*  Precondizione: la lista deve essere caricata con le lezioni disponibili,
+*  file deve contenere il nome del file da aprire, contLezioni è un array
+*  di 7 interi usato per contare le prenotazioni di ogni lezione.
+*
+   Postcondizione:il numero di prenotati della lezione scelta viene
+   incrementato e scritto sul file, il contatore relativo a quella
+   specifica lezione viene aumentato, restituisco 1 se la
+   prenotazione è stata effettuata.
+
+    Funzionamento: Stampiamo a schermo le lezioni disponibili,
+    e attraverso un menù numerato facciamo scegliere la lezione
+    e poi facciamo inserire anche l'orario. Cerchiamo nella lista
+    la combinazione inserita dall'utente, verifichiamo la disponibilità se
+    conferma la scelta, aggiorniamo il numero di prenotati, contLezione,
+    salviamo sul file i cambiamenti e ritorniamo 1. Se la lezione non
+    viene trovata o è piena ritorniamo 0.
+
+ */
 int prenotaLezione(listaLezioni lezioni,char nomefile[],int contLezioni[]) {
     char lezioneScelta[15];
     int oraScelta;
@@ -509,12 +594,32 @@ int prenotaLezione(listaLezioni lezioni,char nomefile[],int contLezioni[]) {
             curr = curr->next;
         }
      return 0; //0 = prenotazione non effettuata
-    }
+}
 
+/*  disponibilitaLezione: controlla quanti posti ci sono in una lezione
+*   Precondizione: lez deve essere correttamente riempito e
+*   quindi lez.pren deve essere minore di lez.maxpren.
+*
+    Postcondizione: la funzione restituisce il numero di posti disponibili.
+
+    Funzionamento: Ritorniamo la differenza tra il
+    massimo di posti prenotabili e quelli prenotati.
+ */
 int disponibilitaLezione(lezione l) {
     return l.maxpren-l.pren;
 }
 
+/*  resetFile: inizializzo il numero di prenotazioni di ogni lezione
+*   Precondizione: le macro sui file devono essere corrette.
+*
+    Postcondizione: a tutti i file dal lunedi al sabato verrà
+    impostato il campo pren a 0.
+
+    Funzionamento: Definisco un array contenente tutti i nomi dei
+    file, creo e carico una lista con tutte le lezioni, setto
+    il numero di prenotati a 0 e salvo su file la lista.
+
+ */
 void resetFile() {
     char *nomefile[]={lunedi,martedi,mercoledi,giovedi,venerdi,sabato};
     for (int i=0;i<6;i++) {

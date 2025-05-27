@@ -15,6 +15,18 @@ typedef struct {
     int maxpren; //numero massimo di posti
 }lezione;
 
-lezione input_lezione(char[],int,int,int);
+//lezione input_lezione(char[],int,int,int);
 void output_lezione(lezione);
+
+//get
+const char* getDesc(const lezione*);
+int getOra(const lezione*);
+int getPren(const lezione*);
+int getMaxPren(const lezione*);
+
+// Set
+void setDesc(lezione*, const char*);
+void setOra(lezione*, int);
+void setPren(lezione*, int);
+void setMaxPren(lezione*, int);
 #endif //LEZIONI_H

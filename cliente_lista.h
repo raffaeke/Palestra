@@ -56,7 +56,7 @@ void updateFileAbb(listaCliente);
 *       anche se può essere vuota.
         Postcondizione: a ogni cliente viene decrementato di 1 l'abbonamento.
  */
-listaCliente updateSettimanale(listaCliente); // ogni settimana passata diminuisce di 1 l abbonamento dei clienti
+listaCliente updateSettimanale(listaCliente);
 
 cliente NewAbbonamento(listaCliente); //Richiede i dati personali all utente per creare un abbonamento a suo nome
 
@@ -78,8 +78,7 @@ int RinnovaAbbonamento(listaCliente,cliente, int);
     campo abbonamento a 0, restituisce 1 se è andata a buon
     fine la funzione, 0 altrimenti.
  */
-int annullaAbbonamento(listaCliente,cliente); //Va a impostare la durata abbonamento del cliente passato a 0
-//restitusce 1 se è andata a buon fine, 0 altrimenti
+int annullaAbbonamento(listaCliente,cliente);
 
 void freeListaC(listaCliente); //Libera la memoria occupata dalla lista
 #endif //CLIENTE_LISTA_H
