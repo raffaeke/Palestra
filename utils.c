@@ -492,10 +492,10 @@ void setMaxPren(lezione* l, int maxpren) {
 
 listaLezioni newListaL() {
     listaLezioni l=malloc(sizeof(struct ListaLezioni));
-    if (l==NULL) { //controllo sulla malloc
+    if (l==NULL) {
         return NULL;
     }
-    l->testa=NULL; //inizializzo la lista
+    l->testa=NULL;
     return l;
 }
 int emptyListaL(listaLezioni l) {
@@ -504,15 +504,7 @@ int emptyListaL(listaLezioni l) {
     }
     return l->testa==NULL; //se esiste ed e' vuota restituisce 1, 0 altrimenti
 }
-void visualListaL(listaLezioni l) {
-    const struct node_l *p=l->testa; //puntatore alla testa della lista
-    if (!emptyListaL(l)) {
-        while (p!=NULL) {
-            output_lezione(p->val); //Visualizzo a schermo il valore del nodo
-            p=p->next;//avanzo di nodo
-        }
-    }else printf("Lista vuota");
-}
+
 listaLezioni consListaL(listaLezioni l, lezione lez) {
     struct node_l *nuovo = malloc(sizeof(struct node_l));
     nuovo->val = lez;
@@ -541,12 +533,12 @@ listaLezioni consListaL(listaLezioni l, lezione lez) {
     inseriamo in coda alla lista ogni lezione. Chiudiamo il file e ritorno la lista caricata.
  */
 listaLezioni loadListaL(listaLezioni l,char file[]) {
-    FILE *f = fopen(file, "r"); //apro il file in lettura
-    if (f==NULL) { //controllo sull apertura del file
+    FILE *f = fopen(file, "r");
+    if (f==NULL) {
         perror("File non aperto");
     }
-    char buffer[256]; //variabile temporanea per prelevare dal file
-    while (fgets(buffer, sizeof(buffer), f)) { //finchè trova righe scritte nel file va avanti
+    char buffer[256];
+    while (fgets(buffer, sizeof(buffer), f)) {
         lezione temp;
         char desc[MAX_L];
         int ora, pren, maxpren;
@@ -556,10 +548,10 @@ listaLezioni loadListaL(listaLezioni l,char file[]) {
             setPren(&temp, pren);
             setMaxPren(&temp, maxpren);
         }
-        l=consListaL(l,temp); //aggiungo alla lista
+        l=consListaL(l,temp);
     }
-    fclose(f); //chiudo il file
-    return l; //ritorno la lista aggiornata
+    fclose(f); 
+    return l;
 }
 
 /*  mostraLezioniDisponibili: visualizza l'elenco delle lezioni

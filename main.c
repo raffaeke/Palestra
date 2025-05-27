@@ -19,7 +19,7 @@ int main(void) {
     int risp=0;
     do {
         resetFile();
-        int num_clienti =1; //rand() % 10;
+        int num_clienti =rand() % 10;
         lc=rimuoviAbbonamenti(lc);
         lc=updateSettimanale(lc);  // MA SE RIMANE ATTIVO OGNI TEST SCALA GLI ABBONAMENTI
         if (settimana==0) {
@@ -40,6 +40,7 @@ int main(void) {
             settimana=0;
         }
         settimana++;
+        printf("\nOggi ci sono %d clienti\n",num_clienti);
         while(num_clienti>0) {
             char cod_fiscale[17];
             printf("\nInserisci identificativo (codice fiscale)\n");
