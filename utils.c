@@ -47,9 +47,10 @@ int maxLezioni(int cont[]) {
     return contMax;
 }
 //-----------------FUNZIONI LISTA_CLIENTE------------------------------------------
+
 listaCliente newListaC() {
-    listaCliente l=malloc(sizeof(struct ListaCliente)); //Alloca dinamicamente uno spazio per creare la lista
-    if(l!=NULL) l->testa=NULL; //se la malloc va a buon fine settiamo la testa a NULL
+    listaCliente l=malloc(sizeof(struct ListaCliente));
+    if(l!=NULL) l->testa=NULL;
     return l;
 }
 
@@ -58,11 +59,11 @@ int emptyListaC(listaCliente l) {
 }
 
 listaCliente consListaC(listaCliente l, const cliente c) {
-    struct node_c *nuovo = malloc(sizeof(struct node_c)); //Allochiamo lo spazio per un nuovo nodo
-    if (nuovo!=NULL) { //controllo se la malloc va a buon fine
-        nuovo->val=c; //Assegnazione del valore
-        nuovo->next=l->testa; //Collego il nuovo nodo alla testa della lista
-        l->testa=nuovo; //La testa della lista diventa il nuovo nodo
+    struct node_c *nuovo = malloc(sizeof(struct node_c));
+    if (nuovo!=NULL) {
+        setCliente(&(nuovo->val), &c);
+        nuovo->next=l->testa;
+        l->testa=nuovo;
     }
     return l;
 }
@@ -80,23 +81,33 @@ listaCliente consListaC(listaCliente l, const cliente c) {
      abbonati e se viene trovato qualcuno con l abbonamento scaduto andiamo
      a chiamare una funzione che aggiorna anche il file. Chiudiamo il file
      e restituiamo la lista caricata.*/
+
 listaCliente LoadInizio(listaCliente l) {
     cliente temp;
     bool flag=false; //Variabile utilizzata per controllare un eventuale uso di updateFileAbb()
-    FILE *f = fopen(NOMEFILE, "r"); //Apertura file abbonati in lettura
-    if (f==NULL) { //controllo sull'apertura
+    FILE *f = fopen(NOMEFILE, "r");
+    if (f==NULL) {
         perror("File non aperto");
     }
     char buffer[256];
-    while (fgets(buffer, sizeof(buffer), f)) {//finché nel file sono presenti abbonati
-        sscanf(buffer, "%s %s %s %s %d", temp.cod_fis, temp.nome, temp.cogn, temp.data, &temp.abb); //prelevo i dati
-        if (temp.abb>0)l = consListaC(l, temp); //se l abbonamento è valido li aggiungo alla lista
+    while (fgets(buffer, sizeof(buffer), f)) {
+        char cod_fis[17], nome[MAX_L], cogn[MAX_L], data[11];
+        int abb;
+        sscanf(buffer, "%s %s %s %s %d",cod_fis,nome,cogn,data,&abb);
+
+        setCodFis(&temp, cod_fis);
+        setNome(&temp, nome);
+        setCognome(&temp, cogn);
+        setData(&temp, data);
+        setAbbonamento(&temp, abb);
+
+        if (getAbbonamento(&temp))l = consListaC(l, temp);
         else {
             flag=true; //se ci sono abbonamenti scaduti la flag diventa true
         }
     }
-    fclose(f); //chiusura file
-    if (flag) { //se la flag è true chiama la funzione
+    fclose(f);
+    if (flag) {
         updateFileAbb(l);
     }
     return l;
@@ -116,25 +127,25 @@ listaCliente LoadInizio(listaCliente l) {
  *  Restituiamo la lista aggiornata.
  */
 listaCliente rimuoviAbbonamenti(listaCliente l) {
-    struct node_c *corr=l->testa; //nodo corrente
-    struct node_c *prec=NULL; //puntatore al nodo precedente
+    struct node_c *corr=l->testa;
+    struct node_c *prec=NULL;
     printf("Lista di clienti cancellati per ABBONAMENTO SCADUTO o ABBONAMENTO ANNULLATO\n");
-    while (corr!=NULL) { //finché il puntatore non arriva alla fine della lista
-        if (corr->val.abb<=0) { //se l abbonamento è minore o uguale a 0
-            output_cliente(corr->val); //stampo i dati del cliente
+    while (corr!=NULL) {
+        if (getAbbonamento(&(corr->val))<=0) {
+            output_cliente(corr->val);
             if (prec==NULL) {
-                l->testa=corr->next; //Il nodo da eliminare è in testa
+                l->testa=corr->next;
                 free(corr);
                 corr=l->testa;
             } else {
-                prec->next=corr->next; //Salta il nodo da eliminare collegando il precedente al successivo
-                free(corr); //Libera lo spazio del nodo corrente
+                prec->next=corr->next;
+                free(corr);
                 corr=prec->next;
             }
         }
         else {
-            prec=corr; //Il precedente prende il valore del nodo corrente
-            corr=corr->next; //il nodo corrente avanza
+            prec=corr;
+            corr=corr->next;
         }
     }
     return l;
@@ -155,18 +166,21 @@ listaCliente rimuoviAbbonamenti(listaCliente l) {
     o altro ritorna 0.
  */
 int RinnovaAbbonamento(listaCliente l, const cliente c, const int r) {
-    struct node_c *p=l->testa; //puntatore alla testa della lista
+    struct node_c *p=l->testa;
     if (!emptyListaC(l)) {
         while (p!=NULL) {
-            if (strcmp(p->val.cod_fis,c.cod_fis)==0) { //Se trova il codice fiscale
-                p->val.abb+=r; //aggiunge le settimane richieste all'abbonamento
-                updateFileAbb(l); //aggiorna il file con l abbonamento rinnovato
-               return 1; //va a buon fine
+            if (strcmp(getCodFis(&(p->val)), getCodFis(&c)) == 0) {
+                int abb = getAbbonamento(&(p->val));
+                setAbbonamento(&(p->val), abb + r);
+                updateFileAbb(l);
+               return 1;
             }
-            p=p->next; //avanza di nodo
-        }}
-    return 0; //non va a buon fine
+            p=p->next;
+        }
+    }
+    return 0;
 }
+
 /*    updateFileAbb: Scrive su file solo chi ha abb>0.
 *    Precondizione: la lista deve contenere tutti gli abbonati
 *    validi, deve essere definita una macro "NOMEFILE".
@@ -178,26 +192,30 @@ int RinnovaAbbonamento(listaCliente l, const cliente c, const int r) {
     tramite un puntatore e ogni nodo viene scritto sul file.
 */
 void updateFileAbb(listaCliente l) {
-    FILE *f = fopen(NOMEFILE, "w"); //apertura file in scrittura
-    struct node_c *p=l->testa; //puntatore alla testa della lista
-    if (f==NULL) {perror("File non aperto");} //controllo sull'apertura
+    FILE *f = fopen(NOMEFILE, "w");
+    struct node_c *p=l->testa;
+    if (f==NULL) {perror("File non aperto");}
     if (!emptyListaC(l)) {
         while (p!=NULL) {
-        fprintf(f,"%s %s %s %s %d\n",p->val.cod_fis,p->val.nome,p->val.cogn,p->val.data,p->val.abb);
-            //scrivo i dati del cliente sul file
-        p=p->next;//avanza di nodo
+            fprintf(f, "%s %s %s %s %d\n",
+                       getCodFis(&(p->val)),
+                       getNome(&(p->val)),
+                       getCognome(&(p->val)),
+                       getData(&(p->val)),
+                       getAbbonamento(&(p->val)));
+        p=p->next;
         }
     }
-    fclose(f); //chiusura file
+    fclose(f);
 }
 
 int sizeListaC(listaCliente l) {
-    struct node_c *p=l->testa; //puntatore alla testa della lista
+    struct node_c *p=l->testa;
     int cont=0;
     if (!emptyListaC(l)) {
         while (p!=NULL) {
-            cont++; //conta i clienti nella lista
-            p=p->next; //avanza di nodo
+            cont++;
+            p=p->next;
         }
     }
     return cont;
@@ -216,15 +234,18 @@ int sizeListaC(listaCliente l) {
         creato un puntatore alla testa della lista in modo da visitare
         l'intera lista, se trova il cliente con il codice fiscale
         passato lo restituisce altrimenti passa la versione NULL di cliente.*/
+
 cliente trovaCliente(listaCliente l,char cod[]) {
-    struct node_c *p=l->testa; //puntatore alla testa della lista
+
+    struct node_c *p=l->testa;
     if (!emptyListaC(l)) {
         while (p!=NULL) {
-            cliente temp=p->val; //copia i dati del nodo corrente nella variabile temp
-            if (strcmp(temp.cod_fis,cod)==0) { //se equivalgono ritorno al main il cliente
+            if (strcmp(getCodFis(&(p->val)), cod) == 0) {
+                cliente temp;
+                setCliente(&temp, &(p->val));
                 return temp;
             }
-            p=p->next; //avanzo di nodo
+            p=p->next;
         }
     }
     else printf("Lista vuota");
@@ -232,14 +253,26 @@ cliente trovaCliente(listaCliente l,char cod[]) {
 }
 cliente NewAbbonamento(listaCliente l) {
     cliente temp;
+    char buffer_codfis[17];
+    char buffer_nome[MAX_L];
+    char buffer_cogn[MAX_L];
+    char buffer_data[11];
+    int abb;
     printf("\nBenvenuto! sei un nuovo cliente, lascia Cod Fiscale|Nome|Cognome|data di nascita| e quante settimane di abbonamento vuole fare!\n");
-    scanf("%s",temp.cod_fis);
-    scanf("%s",temp.nome);
-    scanf("%s",temp.cogn);
-    scanf("%s",temp.data);
-    scanf("%d",&temp.abb);
-    l=consListaC(l,temp); //Aggiungo cliente temp alla lista
-    updateFileAbb(l); //aggiorno il file con il nuovo abbonato
+    scanf("%s",buffer_codfis);
+    scanf("%s",buffer_nome);
+    scanf("%s",buffer_cogn);
+    scanf("%s",buffer_data);
+    scanf("%d",&abb);
+
+    setCodFis(&temp, buffer_codfis);
+    setNome(&temp, buffer_nome);
+    setCognome(&temp, buffer_cogn);
+    setData(&temp, buffer_data);
+    setAbbonamento(&temp, abb);
+
+    l=consListaC(l,temp);
+    updateFileAbb(l);
  return temp;
 }
 
@@ -256,17 +289,17 @@ cliente NewAbbonamento(listaCliente l) {
     a 0 e ritorna 1. Se non lo trova ritorna 0.
  */
 int annullaAbbonamento(listaCliente l, const cliente c) {
-    struct node_c *p=l->testa; //puntatore alla testa della lista
+    struct node_c *p=l->testa;
     if (!emptyListaC(l)) {
         while (p!=NULL) {
-            if (strcmp(p->val.cod_fis,c.cod_fis)==0) { //se trova il codice fiscale
-                p->val.abb=0; //setta l abbonamento a 0
-                return 1; //e la funzione va a buon fine
+            if (strcmp(getCodFis(&(p->val)), getCodFis(&c)) == 0) {
+                setAbbonamento(&(p->val), 0);
+                return 1;
             }
-            p=p->next; //avanzo di nodo
+            p=p->next;
         }
     }
-    return 0; //la funzione non è andata a buon fine
+    return 0;
 }
 
 /*      updateSettimanale: ogni settimana passata diminuisce
@@ -281,11 +314,12 @@ int annullaAbbonamento(listaCliente l, const cliente c) {
         Restituisco la lista con i valori aggiornati.
 */
 listaCliente updateSettimanale(listaCliente l) {
-    struct node_c *p=l->testa; //puntatore alla testa della lista
+    struct node_c *p=l->testa;
     if (!emptyListaC(l)) {
         while (p!=NULL) {
-            p->val.abb--; //decremento l abbonamento
-            p=p->next; //avanzo di nodo
+            int abb = getAbbonamento(&(p->val));
+            setAbbonamento(&(p->val), abb - 1);
+            p=p->next;
         }
     }
     return l;
@@ -357,7 +391,7 @@ void freeCoda(codaCliente q) {
 }
 //-----------------FUNZIONI CLIENTE_H -------------------------------------------------
 void output_cliente(cliente c) {
-    printf("%s\t%-10s\t%-10s\t%-10s\t%-5d\n",c.cod_fis,c.nome,c.cogn,c.data,c.abb);
+    printf("%s\t%-10s\t%-10s\t%-10s\t%-5d\n",getCodFis(&c),getNome(&c),getCognome(&c),getData(&c),getAbbonamento(&c));
 }
 
 bool clienteNULL(cliente c) {

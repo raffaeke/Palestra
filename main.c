@@ -63,9 +63,9 @@ int main(void) {
             scanf("%d",&sceltamenu);
             switch (sceltamenu) {
                 case 0: break;
-                case 4: printf("\nIl cliente %s %s ha lasciato la coda, Avanti il prossimo\n",c.nome,c.cogn);break;
+                case 4: printf("\nIl cliente %s %s ha lasciato la coda, Avanti il prossimo\n",getNome(&c),getCognome(&c));break;
                 case 1: int rinnova=0;
-                        printf("\nCiao %s %s per quanto tempo vuoi prolungare l'abbonamento(numero settimane)?\n",c.nome,c.cogn);
+                        printf("\nCiao %s %s per quanto tempo vuoi prolungare l'abbonamento(numero settimane)?\n",getNome(&c),getCognome(&c));
                         scanf("%d",&rinnova);
                         if (RinnovaAbbonamento(lc,c,rinnova)==1) {
                             printf("\nAbbonamento rinnovato con successo\n");
@@ -74,7 +74,7 @@ int main(void) {
                         else printf("\nAbbonamento non rinnovato\n");
                     break;
                 case 2:
-                        printf("\nCiao %s %s,ci dispiace per la vostra scelta di lasciarci\n",c.nome,c.cogn);
+                        printf("\nCiao %s %s,ci dispiace per la vostra scelta di lasciarci\n",getNome(&c),getCognome(&c));
                         if (annullaAbbonamento(lc,c)==1) {
                             printf("\nAbbonamento annullato con successo\n");
                             contAnnullaAbbonamento++;
@@ -84,7 +84,7 @@ int main(void) {
                 case 3:
                        int sceltagiorno;
                         do {
-                            printf("\nCiao %s %s, che giorno vuoi prenotare la lezione?\n1)LUNEDI\n2)MARTEDI\n3)MERCOLEDI\n4)GIOVEDI\n5)VENERDI\n6)SABATO\n",c.nome,c.cogn);
+                            printf("\nCiao %s %s, che giorno vuoi prenotare la lezione?\n1)LUNEDI\n2)MARTEDI\n3)MERCOLEDI\n4)GIOVEDI\n5)VENERDI\n6)SABATO\n",getNome(&c),getCognome(&c));
                             scanf("%d",&sceltagiorno);
                             switch (sceltagiorno) {
                                 case 1: {
