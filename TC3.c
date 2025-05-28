@@ -4,16 +4,13 @@
 #include <time.h>
 #include "cliente_coda.h"
 #include "lista_lezioni.h"
-/*Verifica che il report generato contenga informazioni corrette e complete sulle
-prenotazioni*/
-void init(int * cont_cliente, int * cont_new_abbonamento, int * cont_rinnova_abbonamento, int * cont_annulla_abbonamento, int * cont_prenota_lezione,int contLezioni[]);
+/*Verifica che il report generato contenga informazioni corrette e complete sulle prenotazioni*/
 int maxLezioni(int contLezioni[]);
 
 int main(void) {
     listaCliente lc = newListaC();
     lc=LoadInizio(lc);
     int contCliente=sizeListaC(lc);
-    int contNewAbbonamento=0,contRinnovaAbbonamento=0,contAnnullaAbbonamento=0,contPrenotaLezione=0;
     int contLezioni[7]={0,0,0,0,0,0,0};
     const char* lezioniDisponibili[] = {
         "Attrezzi", "Yoga", "Karate", "Pilates", "Funzionale", "Fitness", "Zumba"
