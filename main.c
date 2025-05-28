@@ -2,11 +2,26 @@
 #include"cliente_lista.h"
 #include <stdlib.h>
 #include <time.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/stat.h>
 #include "cliente_coda.h"
 #include "lista_lezioni.h"
 void init(int * cont_cliente, int * cont_new_abbonamento, int * cont_rinnova_abbonamento, int * cont_annulla_abbonamento, int * cont_prenota_lezione,int contLezioni[]);
 int maxLezioni(int contLezioni[]);
+#ifdef _WIN32
+#define OS_WINDOWS 1
+#else
+#define OS_WINDOWS 0
+#endif
 
+int controlla_sistema_operativo() {
+    if (OS_WINDOWS) {
+        return 1; // Windows
+    } else {
+        return 0; // Linux o altro
+    }
+}
 int main(void) {
     int contNewAbbonamento=0,contRinnovaAbbonamento=0,contAnnullaAbbonamento=0,contPrenotaLezione=0;
     int settimana=0;
@@ -19,6 +34,9 @@ int main(void) {
     int risp=0;
     do {
         resetFile();
+        if (controlla_sistema_operativo()==1) {
+        system("cls");
+        }else system("clear");
         int num_clienti =rand() % 10;
         lc=rimuoviAbbonamenti(lc);
         lc=updateSettimanale(lc);  // MA SE RIMANE ATTIVO OGNI TEST SCALA GLI ABBONAMENTI
@@ -36,6 +54,8 @@ int main(void) {
             printf("\nAbbonamenti annullati: %d\n",contAnnullaAbbonamento);
             printf("\nPrenotazioni totali: %d\n",contPrenotaLezione);
             printf("\nLa lezione che ha ricevuto più prenotazioni è la %s",lezioniDisponibili[maxLezioni(contLezioni)]);
+            printf("Premere un tasto per continuare . . .");
+            getchar();
             settimana=0;
         }
         settimana++;
