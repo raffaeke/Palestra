@@ -36,7 +36,6 @@ int main(void) {
             printf("\nAbbonamenti annullati: %d\n",contAnnullaAbbonamento);
             printf("\nPrenotazioni totali: %d\n",contPrenotaLezione);
             printf("\nLa lezione che ha ricevuto più prenotazioni è la %s",lezioniDisponibili[maxLezioni(contLezioni)]);
-            system("pause");
             settimana=0;
         }
         settimana++;
