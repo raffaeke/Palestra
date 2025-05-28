@@ -17,3 +17,9 @@ run: $(TARGET)
 
 clean:
 	rm -f $(OBJ) $(TARGET)
+
+run_TC1: TC1
+	./TC1
+
+TC1: TC1.c utils.c
+	$(CC) $(CFLAGS) -o TC1 TC1.c utils.c
