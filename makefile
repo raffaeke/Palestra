@@ -23,3 +23,9 @@ run_TC1: TC1
 
 TC1: TC1.c utils.c
 	$(CC) $(CFLAGS) -o TC1 TC1.c utils.c
+
+run_TC2: TC2
+	./TC2
+
+TC2: TC2.c utils.c
+	$(CC) $(CFLAGS) -o TC2 TC2.c utils.c

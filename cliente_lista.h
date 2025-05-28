@@ -8,6 +8,8 @@ listaCliente newListaC(); //Crea una nuova lista
 
 int emptyListaC(listaCliente); //verifica se la lista e' vuota
 
+void visualizzaListaC(listaCliente); //visualizza la lista
+
 listaCliente consListaC(listaCliente,cliente); //Aggiunge il cliente passato nei parametri in testa alla lista
 
 /*      loadInizio: carica i dati degli abbonati dal file

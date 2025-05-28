@@ -9,7 +9,6 @@
 delle disponibilità. */
 int main(void) {
     int contLezioni[7]={0};
-    lc=LoadInizio(lc);
     listaLezioni ll=newListaL();
     ll=loadListaL(ll,martedi);
     mostraLezioniDisponibili(ll);

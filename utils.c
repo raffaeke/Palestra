@@ -57,7 +57,14 @@ listaCliente newListaC() {
 int emptyListaC(listaCliente l) {
     return l->testa==NULL; //Se la testa è uguale a NULL restituisce 1, 0 altrimenti
 }
-
+void visualizzaListaC(listaCliente l) {
+    struct node_c *curr = l->testa;
+    printf("\nLista abbonati:\n");
+    while (curr != NULL) {
+        output_cliente(curr->val);
+        curr = curr->next;
+    }
+}
 listaCliente consListaC(listaCliente l, const cliente c) {
     struct node_c *nuovo = malloc(sizeof(struct node_c));
     if (nuovo!=NULL) {
@@ -452,7 +459,7 @@ int getAbbonamento(const cliente* c) {
 //-----------------FUNZIONI LEZIONI_H---------------------------------------------------------
 void output_lezione(lezione lez) {
     printf("Lezione: %s | Ora: %d | Prenotati: %d/%d\n",
-               lez.desc, lez.ora, lez.pren, lez.maxpren);
+               getDesc(&lez), getOra(&lez), getPren(&lez),getMaxPren(&lez));
 }
 const char* getDesc(const lezione* l) {
     return l->desc;
